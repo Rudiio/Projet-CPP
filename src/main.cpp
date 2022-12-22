@@ -1,10 +1,12 @@
-#include"GraphicWindow.hpp"
+#include"Simulation.hpp"
 
 
 int main(int argc,char** argv)
 {
-    GraphicWindow test(1080,720,"salut");
-    SDL_Delay(1000);
+    
+    Simulation Simu(1080,720,"Modèlisation de mouvements de foule");
+    
+    Simu.Mainloop();
 
     return 0;
 

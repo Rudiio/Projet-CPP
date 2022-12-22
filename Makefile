@@ -1,5 +1,5 @@
 CC=g++
-CCFLAGS= -Wall -Werror -std=c++11 -g 
+CCFLAGS= -Wall -Werror -std=c++11 -g -O3
 LIBFLAGS= -lSDL2
 SRC= $(wildcard src/*.cpp)
 OBJ= $(SRC:.cpp=.o)
