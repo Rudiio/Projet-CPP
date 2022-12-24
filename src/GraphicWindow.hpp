@@ -16,22 +16,32 @@ class GraphicWindow
         GraphicWindow(size_t width,size_t heigth,const std::string title);
         ~GraphicWindow();
         
-        // virtual void Mainloop();
-        // virtual void Render();
+        virtual void Mainloop()=0;
         
         //fonctions d'affichage de base
         void blit();
         void CleanScreen();
+        void Background();
 
         //fonctions d'affichage spécifiques
         virtual void Render() =0;
+        void DrawAxis();
         void DrawCase(Espace& espace,size_t i,size_t j);
         void DrawEspace(Espace& espace);
+
+        // Inputs 
+        virtual void Input() =0;
 
         // Getteurs
         int get_width() const { return _width;}
         int get_heigth() const {return _heigth;}
         int get_case_size() const {return _case_size;}
+        int get_offset() const {return _offset;}
+        int get_convert() const {return _convert;}
+
+        // Setteurs
+        void add_x_offset(int val) { _x_offset +=val;} 
+        void add_y_offset(int val) { _y_offset +=val;} 
 
     protected:
         // Variables de la SDL
@@ -40,11 +50,16 @@ class GraphicWindow
         
 
     private:
+        // Paramètres de la fenêtre
         size_t _width;
         size_t _heigth;
         std::string _title;
         size_t _case_size; // Taille en pixels d'un coté du quadrillage
-
-        int graduation; // Graduation en m
-        int convert;    // Equivalent de la graduation en pixels
+        
+        // Paramètres d' affichage
+        int _offset;     // Offset pour l'affichage (créé un cadre)
+        int _graduation; // Graduation en m
+        int _convert;    // Equivalent de la graduation en pixels
+        int _x_offset;  //  Décalage d'affichage sur les x -> permet le déplacement de l'affichage sur les x
+        int _y_offset;  // Décalage d'affichage sur les y -> permet le déplacement de l'affichage sur les y
 };

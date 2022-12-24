@@ -33,15 +33,22 @@ void Espace::MapGenerator()
         _map[i]=false;
 
     // Génération de la carte
+
+    // Première et dernière colonne
     for(size_t i=0;i<_n;i++){
         _map[i*_m] = true;
         _map[(_m-1)+ i*_m]=true;
+
+        if(i!=_n/2 && i!=_n/2-1)    // colonne du mileu
+        _map[_m/2 + i*_m]=true;
     }
     
+    // Première et dernière colonne
     for(size_t j=0;j<_m;j++){
         _map[j] = true;
         _map[j + (_n-1)*_m]=true;
     }
+
     
 }
 

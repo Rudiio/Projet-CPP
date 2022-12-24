@@ -3,8 +3,10 @@
 //------------------------- INCLUDES ---------------------------------------
 #include<iostream>
 #include<string>
-#include"GraphicWindow.hpp"
+#include<vector>
 
+#include"GraphicWindow.hpp"
+#include"Individu.hpp"
 
 //-------------------------------------------------------------------------
 // Classe gérant la totalité de la simulation
@@ -17,6 +19,9 @@ class Simulation : public GraphicWindow
         // Fonctions d'affichage
         void Render();
 
+        //  Inputs 
+        void Input();
+
         // Boucle principale
         void Mainloop();
 
@@ -26,7 +31,11 @@ class Simulation : public GraphicWindow
         int _n;
         int _m;
 
-        // Paramètres de simulation
+        // Paramètres de modèlisation
         double h;
         double time;
+
+        // Paramètres de simulation
+        bool _etat;
+        bool _affiche_axes;
 };  

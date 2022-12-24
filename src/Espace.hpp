@@ -13,6 +13,7 @@ class Espace
         Espace(size_t n,size_t m);
         ~Espace();
 
+        // Générateur de carte
         void MapGenerator();
 
         // Surcharges d'opérateurs
