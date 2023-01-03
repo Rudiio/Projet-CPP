@@ -11,7 +11,7 @@ Individu::Individu(double x, double y):
     vit(Vec2D(0,0)),
     pos(Vec2D(x,y))
 {
-
+    
 }
 
 Individu::~Individu()

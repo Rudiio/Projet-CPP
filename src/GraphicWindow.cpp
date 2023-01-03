@@ -1,7 +1,6 @@
 //------------------------- INCLUDES ---------------------------------------
 #include"GraphicWindow.hpp"
-
-
+#include<vector>
 
 //-------------------------FONCTIONS ------------------------------------------
 
@@ -14,7 +13,9 @@ GraphicWindow::GraphicWindow(size_t width,size_t heigth,const std::string title)
     _graduation(1),
     _convert(50),
     _x_offset(0),
-    _y_offset(0)
+    _y_offset(0),
+    _x_origine(0),
+    _y_origine(0)
 {
     //Initialisation de la SDL
     if(SDL_Init(SDL_INIT_VIDEO)==-1)
@@ -124,14 +125,27 @@ void GraphicWindow::DrawCase(Espace& espace,size_t i, size_t j)
     SDL_Rect rect = {x+1,y+1,(int)_case_size-1,(int)_case_size-1};
 
     //Affichage d'un mur
-    if(espace(i,j)){
+    if(espace(i,j)==1){
         // SDL_SetRenderDrawColor(renderer,0,0,0,255);
         SDL_SetRenderDrawColor(renderer,105,105,105,255);
         SDL_RenderFillRect(renderer,&rect);
     }
-    else{
+    else if (espace(i,j)==0){
         rect = {x,y,(int)_case_size,(int)_case_size};
         SDL_SetRenderDrawColor(renderer,254, 254, 224,255);
         SDL_RenderFillRect(renderer,&rect);
     }
+}
+
+// Dessine la foule
+void GraphicWindow::DrawFoule(ModeleFoule& foule)
+{
+    int opt[] = {(int)_width,(int)_heigth,_offset,_graduation,_convert,_x_offset,_y_offset,(int)_case_size};
+
+    size_t n = foule.get_n();
+    std::vector<Individu*> vec_foule = foule.get_foule();
+
+    for (size_t i=0;i<n;i++)
+        vec_foule[i]->_DrawIndividu(window,renderer,opt);
+    
 }

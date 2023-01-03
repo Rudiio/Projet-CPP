@@ -5,6 +5,7 @@
 #include<string>
 #include<SDL2/SDL.h>
 #include"Espace.hpp"
+#include"ModeleFoule.hpp"
 
 //-------------------------------------------------------------------------
 
@@ -28,6 +29,7 @@ class GraphicWindow
         void DrawAxis();
         void DrawCase(Espace& espace,size_t i,size_t j);
         void DrawEspace(Espace& espace);
+        void DrawFoule(ModeleFoule& foule);
 
         // Inputs 
         virtual void Input() =0;
@@ -40,8 +42,8 @@ class GraphicWindow
         int get_convert() const {return _convert;}
 
         // Setteurs
-        void add_x_offset(int val) { _x_offset +=val;} 
-        void add_y_offset(int val) { _y_offset +=val;} 
+        void add_x(int val,int x_val_ori) { _x_offset +=val;_x_origine+=x_val_ori;} 
+        void add_y(int val,int y_val_ori) { _y_offset +=val;_y_origine+=y_val_ori;} 
 
     protected:
         // Variables de la SDL
@@ -62,4 +64,6 @@ class GraphicWindow
         int _convert;    // Equivalent de la graduation en pixels
         int _x_offset;  //  Décalage d'affichage sur les x -> permet le déplacement de l'affichage sur les x
         int _y_offset;  // Décalage d'affichage sur les y -> permet le déplacement de l'affichage sur les y
+        int _x_origine;  // origine sur les x
+        int _y_origine;  // origine sur les y
 };

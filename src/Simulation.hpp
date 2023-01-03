@@ -4,9 +4,7 @@
 #include<iostream>
 #include<string>
 #include<vector>
-
 #include"GraphicWindow.hpp"
-#include"Individu.hpp"
 
 //-------------------------------------------------------------------------
 // Classe gérant la totalité de la simulation
@@ -38,4 +36,9 @@ class Simulation : public GraphicWindow
         // Paramètres de simulation
         bool _etat;
         bool _affiche_axes;
+
+        // Variables de Foule
+        size_t _nb;  // nombre d'individus dans la foule
+        ModeleFoule * _foule;
+
 };  

@@ -11,7 +11,7 @@ Espace::Espace(size_t n,size_t m):
     _m(m)
 {
     // Allocation de la mémoire pour la map
-    _map = new bool[n*m];
+    _map = new int[n*m];
 
     // Création de la map
     MapGenerator();
@@ -30,23 +30,23 @@ void Espace::MapGenerator()
 {
     // Initialisation de la carte
     for(size_t i=0;i<_n*_m;i++)
-        _map[i]=false;
+        _map[i]=0;
 
     // Génération de la carte
 
     // Première et dernière colonne
     for(size_t i=0;i<_n;i++){
-        _map[i*_m] = true;
-        _map[(_m-1)+ i*_m]=true;
+        _map[i*_m] = 1;
+        _map[(_m-1)+ i*_m]=1;
 
         if(i!=_n/2 && i!=_n/2-1)    // colonne du mileu
-        _map[_m/2 + i*_m]=true;
+        _map[_m/2 + i*_m]=1;
     }
     
     // Première et dernière colonne
     for(size_t j=0;j<_m;j++){
-        _map[j] = true;
-        _map[j + (_n-1)*_m]=true;
+        _map[j] = 1;
+        _map[j + (_n-1)*_m]=1;
     }
 
     
@@ -54,12 +54,12 @@ void Espace::MapGenerator()
 
 //----------------------------------------------------------------------------
 
-bool Espace::operator()(size_t i,size_t j) const
+int Espace::operator()(size_t i,size_t j) const
 {
     return _map[j+i*_m];
 }
 
-bool& Espace::operator()(size_t i,size_t j) 
+int& Espace::operator()(size_t i,size_t j) 
 {
     return _map[j+i*_m];
 }

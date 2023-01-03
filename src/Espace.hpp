@@ -17,15 +17,15 @@ class Espace
         void MapGenerator();
 
         // Surcharges d'opérateurs
-        bool operator()(size_t i,size_t j) const;
-        bool& operator()(size_t i,size_t j);
+        int operator()(size_t i,size_t j) const;
+        int& operator()(size_t i,size_t j);
 
         // Getteurs
         size_t get_n() const {return _n;};
         size_t get_m() const {return _m;};
 
     private:
-        bool* _map;
+        int* _map;
         size_t _n;
         size_t _m;
 };
