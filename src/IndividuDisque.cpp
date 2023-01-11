@@ -2,6 +2,7 @@
 //------------------------- INCLUDES ---------------------------------------
 #include<iostream>
 #include<string>
+#include<cstdlib>
 #include"IndividuDisque.hpp"
 
 //-------------------------------------------------------------------------
@@ -12,10 +13,12 @@ IndividuDisque::IndividuDisque(double x, double y,double rayon):
 {
     aire = Aire();
 
-    // Couleur d'affichage de l'individu
-    rgb[0]=178; // Rouge
-    rgb[1]=34; // Vert
-    rgb[2]=34; // Bleu
+    // rgb[0]=178; // Rouge
+    // rgb[1]=34; // Vert
+    // rgb[2]=34; // Bleu
+    rgb[0]=rand()%256; // Rouge
+    rgb[1]=rand()%256; // Vert
+    rgb[2]=rand()%256; // Bleu
 }
 
 void IndividuDisque::_DrawIndividu(SDL_Window *window,SDL_Renderer *renderer,int opt[])

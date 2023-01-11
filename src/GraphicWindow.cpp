@@ -13,6 +13,7 @@ GraphicWindow::GraphicWindow(size_t width,size_t heigth,const std::string title)
     _x_origine(0),
     _y_origine(0),
     _axis_offset(0),
+    _font(NULL),
     _width(width),
     _heigth(heigth),
     _title(title),
@@ -21,6 +22,11 @@ GraphicWindow::GraphicWindow(size_t width,size_t heigth,const std::string title)
     //Initialisation de la SDL
     if(SDL_Init(SDL_INIT_VIDEO)==-1)
 		throw std::runtime_error(SDL_GetError());
+
+    //Initialisation de la SDL_TTF
+    if (TTF_Init() == -1) {
+	    throw std::runtime_error(SDL_GetError());
+    }
 
     //Création de la fenêtre
     window = SDL_CreateWindow(title.c_str(),SDL_WINDOWPOS_UNDEFINED,SDL_WINDOWPOS_UNDEFINED ,width,heigth,SDL_WINDOW_RESIZABLE);
@@ -33,6 +39,10 @@ GraphicWindow::GraphicWindow(size_t width,size_t heigth,const std::string title)
 
     if (renderer==NULL)
         throw std::runtime_error(SDL_GetError());
+    
+    // Chargement de la police
+    char path[]= "./font/dejavu/ttf/DejaVuSans.ttf";
+    _font = charge_font(path,400);
 
     //Coloriage du fond
 	SDL_SetRenderDrawColor(renderer,255,255,255, 255); 
@@ -45,6 +55,8 @@ GraphicWindow::~GraphicWindow()
     // Suppression 
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
+    TTF_CloseFont(_font);
+    TTF_Quit();
     SDL_Quit();
 }
 
@@ -66,8 +78,24 @@ void GraphicWindow::CleanScreen()
 void GraphicWindow::Background()
 {
     /* Colore le rendu en blanc pour réinitialiser l'affichage */
-    SDL_SetRenderDrawColor(renderer, 254, 254, 224, 255); 
+    SDL_SetRenderDrawColor(renderer, 254, 254, 224, 255);   //beige
+    // SDL_SetRenderDrawColor(renderer,105,105,105,255);   // gris 
 	SDL_RenderClear(renderer);
+}
+
+/* Charge une font .ttf avec la taille de police size*/
+TTF_Font * GraphicWindow::charge_font(char * path,int size)
+{
+
+    TTF_Font *font = NULL;
+    font = TTF_OpenFont(path,size);
+    if(!font)
+    {
+        SDL_Log("ERREUR: Chargement font > %s\n",SDL_GetError());
+	    exit(EXIT_FAILURE);
+    }
+
+    return font;
 }
 
 //----------------------------------------------------------------------------
@@ -77,6 +105,7 @@ void GraphicWindow::DrawAxis()
 {   
     // Couleur des axes
     SDL_SetRenderDrawColor(renderer,0,0,0,255);
+    SDL_Color col  = {0,0,0};
     int grad_width = 5;
 
     // Axe des abscisses
@@ -91,8 +120,32 @@ void GraphicWindow::DrawAxis()
     SDL_RenderDrawLine(renderer,start_x + (_width - 2*_offset - 2*_case_size),start_y,start_x + (_width - 2*_offset - 2*_case_size),start_y+grad_width);
     SDL_RenderDrawLine(renderer,start_x + (_width - 2*_offset - 2*_case_size -1),start_y,start_x + (_width - 2*_offset - 2*_case_size - 1),start_y+grad_width);
 
-    for(int x = start_x + _convert; x < (int)(start_x + _width - 2*_offset - 2*_case_size);x += _convert){
+    int i=_x_origine;
+    for(int x = start_x ; x < (int)(start_x + _width - 2*_offset - 2*_case_size);x += _convert){
+        std::string text = std::to_string(i);
+
+        if (0<=i && i<=9)
+            text = "0"+text;
+
+        //Chargement du texte dans une surface
+        SDL_Surface *surface = TTF_RenderText_Solid(_font,text.c_str(),col);
+
+        if (surface==NULL)
+            printf("%s\n",SDL_GetError());
+
+        //Conversion de la surface en texture
+        SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, surface);
+
+        //affichage de la texture
+        SDL_Rect On_render = {x-10,start_y-grad_width -_convert/3,_convert/3,_convert/3};
+
+        SDL_RenderCopy(renderer, texture,NULL, &On_render);
         SDL_RenderDrawLine(renderer,x,start_y-grad_width,x,start_y+grad_width);
+        i++;
+
+        //Libération de la mémoire
+        SDL_DestroyTexture(texture);
+        SDL_FreeSurface(surface);
     }
 
     // Axe des ordonnées
@@ -109,8 +162,32 @@ void GraphicWindow::DrawAxis()
     SDL_RenderDrawLine(renderer,start_x - grad_width,_heigth - _offset -_case_size,start_x ,_heigth - _offset -_case_size);
     SDL_RenderDrawLine(renderer,start_x - grad_width,_heigth - _offset -_case_size -1,start_x ,_heigth - _offset -_case_size -1);
 
-    for(int y = start_y;y  < (int)(_heigth - _offset -_case_size);y += _convert){
+    i = _y_origine;
+    for(int y = start_y ;y  < (int)(_heigth - _offset -_case_size);y += _convert){
+        std::string text = std::to_string(i);
+        
+        if (0<=i && i<9)
+            text = "0"+text;
+
+        //Chargement du texte dans une surface
+        SDL_Surface *surface = TTF_RenderText_Solid(_font,text.c_str(),col);
+
+        if (surface==NULL)
+            printf("%s\n",SDL_GetError());
+
+        //Conversion de la surface en texture
+        SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, surface);
+
+        //affichage de la texture
+        SDL_Rect On_render = {start_x -_convert/2 ,y-7,_convert/3,_convert/3};
+
+        SDL_RenderCopy(renderer, texture,NULL, &On_render);
         SDL_RenderDrawLine(renderer,start_x - grad_width,y,start_x + grad_width,y);
+        i++;
+
+        //Libération de la mémoire
+        SDL_DestroyTexture(texture);
+        SDL_FreeSurface(surface);
     }
 }
 
@@ -129,7 +206,7 @@ void GraphicWindow::DrawCase(Espace& espace,size_t i, size_t j)
     int y = (i-_axis_offset)*_case_size+_offset + _y_offset;
 
     // Attention à la correspondance avec les axes de la SDL
-    SDL_Rect rect = {x+1,y+1,(int)_case_size-1,(int)_case_size-1};
+    SDL_Rect rect = {x+1,y+1,(int)_case_size,(int)_case_size};
 
     //Affichage d'un mur
     if(espace(i,j)==1){

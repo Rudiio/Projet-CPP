@@ -4,6 +4,7 @@
 #include<iostream>
 #include<string>
 #include<SDL2/SDL.h>
+#include <SDL2/SDL_ttf.h>
 #include"Espace.hpp"
 #include"ModeleFoule.hpp"
 
@@ -23,6 +24,7 @@ class GraphicWindow
         void blit();
         void CleanScreen();
         void Background();
+        TTF_Font *charge_font(char * path,int size);
 
         //fonctions d'affichage spécifiques
         virtual void Render() =0;
@@ -60,7 +62,8 @@ class GraphicWindow
         int _x_origine;  // origine sur les x
         int _y_origine;  // origine sur les y
         int _axis_offset;   
-
+        TTF_Font *_font;
+        
     private:
         // Paramètres de la fenêtre
         size_t _width;

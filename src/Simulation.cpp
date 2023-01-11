@@ -11,7 +11,7 @@ Simulation::Simulation(int width,int heigth,std::string title):
     time(0),      // Temps total
     _etat(true),
     _affiche_axes(true),
-    _nb(1) // Taille de la foule
+    _nb(20) // Taille de la foule
 {
 
     // Création de l'esapce de la Simulation
@@ -20,7 +20,7 @@ Simulation::Simulation(int width,int heigth,std::string title):
     _espace = new Espace(_n,_m);
 
     // Création de la foule
-    _foule = new ModeleFoule(_nb);
+    _foule = new ModeleFoule(_nb,_n,_m);
 
 
 }
@@ -44,7 +44,7 @@ void Simulation::Render()
     CleanScreen();
 
     // Affichage du background 
-    // Background();
+    Background();
 
     // Affichage de l'espace
     DrawEspace(*_espace);
@@ -77,22 +77,22 @@ void Simulation::Input()
                 switch(event.key.keysym.sym){
                     case SDLK_UP:
                         _y_offset+=_convert;
-                        ++_y_origine;
+                        --_y_origine;
                         return ;
 
                     case SDLK_DOWN:
                         _y_offset-=_convert;
-                        --_y_origine;
+                        ++_y_origine;
                         return ;
 
                     case SDLK_LEFT:
                         _x_offset+=_convert;
-                        ++_x_origine;
+                        --_x_origine;
                         return ;
 
                     case SDLK_RIGHT:
                         _x_offset-=_convert;
-                        --_x_origine;
+                        ++_x_origine;
                         return ;
 
                     case SDLK_j:

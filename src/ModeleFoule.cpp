@@ -3,15 +3,19 @@
 //------------------------- INCLUDES ---------------------------------------
 #include<iostream>
 #include<string>
+#include<cstdlib>
+#include<random>
+#include<chrono>
 #include"ModeleFoule.hpp"
 
 //-------------------------------------------------------------------------
 
-ModeleFoule::ModeleFoule(size_t n):
-    _n(n)
+ModeleFoule::ModeleFoule(size_t n,size_t espace_n,size_t espace_m):
+    _n(n),
+    _espace_n(espace_n),
+    _espace_m(espace_m)
 {
     InitFoule();
-    // _foule[0]->toString();
 }
 
 ModeleFoule::~ModeleFoule()
@@ -25,7 +29,16 @@ ModeleFoule::~ModeleFoule()
 
 void ModeleFoule::InitFoule()
 {   
+    std::uniform_real_distribution<double> unif(0.2,0.35);
+    std::uniform_real_distribution<double> posx(0,_espace_m/2-1);
+    std::uniform_real_distribution<double> posy(0,_espace_n-2);
+    std::default_random_engine re(std::chrono::system_clock::now().time_since_epoch().count());
+    
     for(size_t i=0;i<_n;i++){
-        _foule.push_back(new IndividuDisque(3.5,i*2+1,0.3));
+        double x = posx(re);
+        double y = posy(re);
+        double r = unif(re);
+        
+        _foule.push_back(new IndividuDisque(x,y,r));
     }
 }
