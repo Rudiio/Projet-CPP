@@ -22,7 +22,6 @@ void IndividuDisque::_DrawIndividu(SDL_Window *window,SDL_Renderer *renderer,int
 {
     // Options d'affichage
     // int width = opt[0];
-    int heigth = opt[1];
     int offset = opt[2];     
     int graduation = opt[3]; 
     int convert = opt[4];    
@@ -33,7 +32,7 @@ void IndividuDisque::_DrawIndividu(SDL_Window *window,SDL_Renderer *renderer,int
     // Détermination des nouvelles positions
     // Conversion du mètre en pixels
     double scaled_x =  (pos.x)*convert/graduation + offset + x_offset + case_size;
-    double scaled_y = heigth - (pos.y)*convert/graduation - offset + y_offset - case_size;
+    double scaled_y = (pos.y)*convert/graduation + offset + y_offset + case_size;
     double scaled_r = _rayon*convert/graduation;
 
     // Affichage

@@ -26,6 +26,6 @@ ModeleFoule::~ModeleFoule()
 void ModeleFoule::InitFoule()
 {   
     for(size_t i=0;i<_n;i++){
-        _foule.push_back(new IndividuDisque(3.5,i*2+1,0.5));
+        _foule.push_back(new IndividuDisque(3.5,i*2+1,0.3));
     }
 }

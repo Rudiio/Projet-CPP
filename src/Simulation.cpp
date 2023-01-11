@@ -11,16 +11,17 @@ Simulation::Simulation(int width,int heigth,std::string title):
     time(0),      // Temps total
     _etat(true),
     _affiche_axes(true),
-    _nb(5) // Taille de la foule
+    _nb(1) // Taille de la foule
 {
 
     // Création de l'esapce de la Simulation
     _n=((heigth-2*get_offset())/get_case_size());  // nombre de lignes
     _m=((width-2*get_offset())/get_case_size());  // nombre de colonnes
     _espace = new Espace(_n,_m);
-    
+
     // Création de la foule
     _foule = new ModeleFoule(_nb);
+
 
 }
 
@@ -75,21 +76,41 @@ void Simulation::Input()
             case SDL_KEYDOWN:
                 switch(event.key.keysym.sym){
                     case SDLK_UP:
-                        add_y(get_convert(),1);
+                        _y_offset+=_convert;
+                        ++_y_origine;
                         return ;
 
                     case SDLK_DOWN:
-                        add_y(-get_convert(),-1);
+                        _y_offset-=_convert;
+                        --_y_origine;
                         return ;
 
                     case SDLK_LEFT:
-                        add_x(get_convert(),-1);
+                        _x_offset+=_convert;
+                        ++_x_origine;
                         return ;
 
                     case SDLK_RIGHT:
-                        add_x(-get_convert(),1);
+                        _x_offset-=_convert;
+                        --_x_origine;
                         return ;
-                    
+
+                    case SDLK_j:
+                        if(_convert-10>0){
+                            _convert-=10;
+                            add_case_size(-10);
+                            _axis_offset+=_n - (get_heigth() - _offset)/get_case_size();
+                        }
+                        return;
+
+                    case SDLK_k:
+                        if(_convert<100){
+                            _convert+=10;
+                            add_case_size(10);
+                            _axis_offset+=_n - (get_heigth() - _offset)/get_case_size();
+                        }
+                        return;
+
                     case SDLK_a:
                         _affiche_axes = !_affiche_axes;
                         return;

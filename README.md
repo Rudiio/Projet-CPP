@@ -7,5 +7,5 @@
 
 Pour télécharger la librairie SDL2 sous Ubuntu:
 ```sh
-sudo apt install libsdl2-dev 
+sudo apt install libsdl2-dev libsdl-ttf2.0-dev
 ```

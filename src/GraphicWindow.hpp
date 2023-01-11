@@ -44,20 +44,13 @@ class GraphicWindow
         // Setteurs
         void add_x(int val,int x_val_ori) { _x_offset +=val;_x_origine+=x_val_ori;} 
         void add_y(int val,int y_val_ori) { _y_offset +=val;_y_origine+=y_val_ori;} 
+        void add_case_size(int val) {_case_size+=val;};
 
     protected:
         // Variables de la SDL
         SDL_Window* window;
         SDL_Renderer* renderer;
-        
 
-    private:
-        // Paramètres de la fenêtre
-        size_t _width;
-        size_t _heigth;
-        std::string _title;
-        size_t _case_size; // Taille en pixels d'un coté du quadrillage
-        
         // Paramètres d' affichage
         int _offset;     // Offset pour l'affichage (créé un cadre)
         int _graduation; // Graduation en m
@@ -66,4 +59,13 @@ class GraphicWindow
         int _y_offset;  // Décalage d'affichage sur les y -> permet le déplacement de l'affichage sur les y
         int _x_origine;  // origine sur les x
         int _y_origine;  // origine sur les y
+        int _axis_offset;   
+
+    private:
+        // Paramètres de la fenêtre
+        size_t _width;
+        size_t _heigth;
+        std::string _title;
+        size_t _case_size; // Taille en m d'un coté du quadrillage
+        
 };
