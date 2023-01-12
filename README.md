@@ -1,6 +1,6 @@
 # Projet-CPP : Modélisation de l'évacuation de stades
 
-## BAUDER Léo-Paul, FIDA CYRILLE Rudio
+## BAUDET Léo-Paul, FIDA CYRILLE Rudio
 
 
 ## Installation

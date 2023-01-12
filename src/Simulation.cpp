@@ -99,7 +99,6 @@ void Simulation::Input()
                         if(_convert-10>0){
                             _convert-=10;
                             add_case_size(-10);
-                            _axis_offset+=_n - (get_heigth() - _offset)/get_case_size();
                         }
                         return;
 
@@ -107,7 +106,6 @@ void Simulation::Input()
                         if(_convert<100){
                             _convert+=10;
                             add_case_size(10);
-                            _axis_offset+=_n - (get_heigth() - _offset)/get_case_size();
                         }
                         return;
 
