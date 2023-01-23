@@ -5,6 +5,7 @@
 #include<string>
 #include<vector>
 #include"GraphicWindow.hpp"
+#include"FastMarching.hpp"
 
 //-------------------------------------------------------------------------
 // Classe gérant la totalité de la simulation
@@ -39,6 +40,7 @@ class Simulation : public GraphicWindow
 
         // Variables de Foule
         size_t _nb;  // nombre d'individus dans la foule
-        ModeleFoule * _foule;
+        ModeleFoule* _foule;
+        FastMarching* _FM;
 
 };  

@@ -1,13 +1,14 @@
 //------------------------- INCLUDES ---------------------------------------
 #include"GraphicWindow.hpp"
 #include<vector>
+#include"parametres.hpp"
 
 //-------------------------FONCTIONS ------------------------------------------
 
 GraphicWindow::GraphicWindow(size_t width,size_t heigth,const std::string title):
     _offset(30),
-    _graduation(1),
-    _convert(50),
+    _graduation(pas_espace), // pas d'espace
+    _convert(20),
     _x_offset(0),
     _y_offset(0),
     _x_origine(0),
@@ -80,6 +81,7 @@ void GraphicWindow::Background()
     /* Colore le rendu en blanc pour réinitialiser l'affichage */
     SDL_SetRenderDrawColor(renderer, 254, 254, 224, 255);   //beige
     // SDL_SetRenderDrawColor(renderer,105,105,105,255);   // gris 
+    // SDL_SetRenderDrawColor(renderer,255,255,255,255);   // gris 
 	SDL_RenderClear(renderer);
 }
 
@@ -141,7 +143,7 @@ void GraphicWindow::DrawAxis()
 
         SDL_RenderCopy(renderer, texture,NULL, &On_render);
         SDL_RenderDrawLine(renderer,x,start_y-grad_width,x,start_y+grad_width);
-        i++;
+        i+=_graduation;
 
         //Libération de la mémoire
         SDL_DestroyTexture(texture);
@@ -166,7 +168,7 @@ void GraphicWindow::DrawAxis()
     for(int y = start_y ;y  < (int)(_heigth - _offset -_case_size);y += _convert){
         std::string text = std::to_string(i);
         
-        if (0<=i && i<9)
+        if (0<=i && i<=9)
             text = "0"+text;
 
         //Chargement du texte dans une surface
@@ -183,7 +185,7 @@ void GraphicWindow::DrawAxis()
 
         SDL_RenderCopy(renderer, texture,NULL, &On_render);
         SDL_RenderDrawLine(renderer,start_x - grad_width,y,start_x + grad_width,y);
-        i++;
+        i+=_graduation;
 
         //Libération de la mémoire
         SDL_DestroyTexture(texture);
@@ -206,7 +208,7 @@ void GraphicWindow::DrawCase(Espace& espace,size_t i, size_t j)
     int y = (i-_axis_offset)*_case_size+_offset + _y_offset;
 
     // Attention à la correspondance avec les axes de la SDL
-    SDL_Rect rect = {x+1,y+1,(int)_case_size,(int)_case_size};
+    SDL_Rect rect = {x+1,y+1,(int)_case_size-1,(int)_case_size-1};
 
     //Affichage d'un mur
     if(espace(i,j)==1){
@@ -217,6 +219,12 @@ void GraphicWindow::DrawCase(Espace& espace,size_t i, size_t j)
     else if (espace(i,j)==0){
         rect = {x,y,(int)_case_size,(int)_case_size};
         SDL_SetRenderDrawColor(renderer,254, 254, 224,255);
+        // SDL_SetRenderDrawColor(renderer,255, 0, 0,255);
+        SDL_RenderFillRect(renderer,&rect);
+    }
+    else if (espace(i,j)==2){
+        rect = {x,y,(int)_case_size,(int)_case_size};
+        SDL_SetRenderDrawColor(renderer,70, 130, 180,255);
         SDL_RenderFillRect(renderer,&rect);
     }
 }

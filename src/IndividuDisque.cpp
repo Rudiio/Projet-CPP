@@ -5,11 +5,11 @@
 #include<cstdlib>
 #include"IndividuDisque.hpp"
 
-//-------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 
 IndividuDisque::IndividuDisque(double x, double y,double rayon):
     Individu(x,y),
-    _rayon(rayon)
+    _rayon(rayon_pietons)
 {
     aire = Aire();
 
@@ -54,10 +54,24 @@ void IndividuDisque::DrawDisque(SDL_Window *window,SDL_Renderer *renderer,double
             }
 }
 
-void IndividuDisque::CalculForces()
+// ----------------------- FORCES -----------------------------------------------------
+
+void IndividuDisque::ForceInteraction()
 {
 
 }
+
+void IndividuDisque::ForceCorps(size_t xmin,size_t ymin,double dx,size_t Nx,size_t Ny,int* first,int* pointers)
+{
+
+}
+
+void IndividuDisque::ForceFrictionGlissante()
+{
+
+}
+
+//------------------------------------------------------------------------------------
 
 void IndividuDisque::toString()
 {

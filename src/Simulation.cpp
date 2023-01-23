@@ -1,20 +1,20 @@
 //------------------------- INCLUDES ---------------------------------------
 #include"Simulation.hpp"
-
+#include"parametres.hpp"
 
 //------------------------- SIMULATION ------------------------------------------
 
 Simulation::Simulation(int width,int heigth,std::string title):
     GraphicWindow(width,heigth,title),
     _espace(NULL),
-    h(10),       // Pas de temps
+    h(pas_de_temps),       // Pas de temps
     time(0),      // Temps total
     _etat(true),
-    _affiche_axes(true),
-    _nb(20) // Taille de la foule
+    _affiche_axes(false),
+    _nb(2) // Taille de la foule
 {
 
-    // Création de l'esapce de la Simulation
+    // Création de l'espace de la Simulation
     _n=((heigth-2*get_offset())/get_case_size());  // nombre de lignes
     _m=((width-2*get_offset())/get_case_size());  // nombre de colonnes
     _espace = new Espace(_n,_m);
@@ -22,7 +22,9 @@ Simulation::Simulation(int width,int heigth,std::string title):
     // Création de la foule
     _foule = new ModeleFoule(_nb,_n,_m);
 
-
+    // Création du fast-Marching
+    _FM = new FastMarching(_espace,_graduation);
+    _FM->FM();
 }
 
 Simulation::~Simulation()
@@ -32,6 +34,8 @@ Simulation::~Simulation()
 
     // Suppression de la foule
     delete _foule;
+
+    delete _FM;
 
 }
 
@@ -137,6 +141,15 @@ void Simulation::Mainloop()
         // Gestion des Inputs et evèments
         Input();
 
+        // ---------------------------- PARTIE MODELISATION ----------------------------- //
+        
+        // Calcul des forces
+        _foule->CalculForce((*_FM));
+
+        // Calcul de la position
+        _foule->Euler(h);
+
+        // ----------------------------------------------------------------------------- //
         // Mise à jour de l'affichage
         Render();
 
