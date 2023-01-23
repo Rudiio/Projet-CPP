@@ -25,15 +25,17 @@ class IndividuDisque : public Individu
         
         // Calcul des forces soumises à un individu
         void _CalculForces(FastMarching& FM,size_t* first,size_t* pointers);
-        void ForceInteraction();
-        void ForceCorps(size_t xmin,size_t ymin,double dx,size_t Nx,size_t Ny,int* first,int* pointers);
-        void ForceFrictionGlissante();
+        void ForceInteractions(std::vector<Individu*> foule,Individu* current);
+        void ForcesPsycho(Individu* b);
+        void ForcesCorps(Individu* b);
+        void ForcesGlissante(Individu* b);
 
         void toString();
+
+        double get_rayon()const {return _rayon;}
         
     private:
         double _rayon;
-        const double PI = 3.14159265358979323846;
 
 };
 

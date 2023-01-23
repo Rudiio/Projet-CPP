@@ -19,7 +19,11 @@ class Vec2D
         double y;
 };
 
-// Vec2D::Vec2D(double _x,double _y):
-//     x(_x),
-//     y(_y)
-// {}
+
+double norm2(Vec2D X1,Vec2D X2);
+double norm(Vec2D X);
+double dot(Vec2D X1,Vec2D X2);
+Vec2D operator+(Vec2D X1, Vec2D X2);
+Vec2D operator-(Vec2D X1, Vec2D X2);
+Vec2D operator*(double a, Vec2D X);
+Vec2D operator/(Vec2D X,double a);

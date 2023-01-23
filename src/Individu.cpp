@@ -25,12 +25,27 @@ Individu::~Individu()
 void Individu::_CalculForces(FastMarching& FM)
 {   
     // Calcul des forces à l'étape actuelle
-    ResetAcc(); // On met l'accélération à 0 
-    ForceAcceleration(FM);
-    ForceInteraction();
-    // ForceCorps();
-    ForceFrictionGlissante();
+    // ResetAcc(); // On met l'accélération à 0 
+    // ForceAcceleration(FM);
+    // // ForceInteractions();
+    // // ForceCorps();
+    // ForceFrictionGlissante();
 
+}
+
+void Individu::ForceInteractions(std::vector<Individu*> foule,Individu* current)
+{   
+    // Itération sur la foule
+    for(size_t j=0;j<foule.size();j++)
+    {
+        Individu* b = foule[j];
+
+        if(b!=current){
+            ForcesPsycho(b);
+            ForcesCorps(b);
+            ForcesGlissante(b);
+        }
+    }
 }
 
 void Individu::ForceAcceleration(FastMarching& FM)

@@ -34,8 +34,8 @@ class FastMarching
         size_t __n;
         size_t __m;
 
-        size_t i0;
-        size_t j0;
+        size_t _i0;
+        size_t _j0;
 
         double _p;
 };

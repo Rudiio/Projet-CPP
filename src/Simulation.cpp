@@ -15,8 +15,8 @@ Simulation::Simulation(int width,int heigth,std::string title):
 {
 
     // Création de l'espace de la Simulation
-    _n=((heigth-2*get_offset())/get_case_size());  // nombre de lignes
-    _m=((width-2*get_offset())/get_case_size());  // nombre de colonnes
+    _n=Nx;  // nombre de lignes
+    _m=Ny;  // nombre de colonnes
     _espace = new Espace(_n,_m);
 
     // Création de la foule
@@ -136,7 +136,7 @@ void Simulation::Mainloop()
     Render();
 
     // Boucle
-    while(_etat){
+    while(_etat && _foule->get_foule().size()!=0){
 
         // Gestion des Inputs et evèments
         Input();
@@ -148,6 +148,9 @@ void Simulation::Mainloop()
 
         // Calcul de la position
         _foule->Euler(h);
+
+        // Evacuation
+        _foule->Evacutation();
 
         // ----------------------------------------------------------------------------- //
         // Mise à jour de l'affichage

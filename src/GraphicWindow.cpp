@@ -6,9 +6,9 @@
 //-------------------------FONCTIONS ------------------------------------------
 
 GraphicWindow::GraphicWindow(size_t width,size_t heigth,const std::string title):
-    _offset(30),
+    _offset(offset),
     _graduation(pas_espace), // pas d'espace
-    _convert(20),
+    _convert(convert),
     _x_offset(0),
     _y_offset(0),
     _x_origine(0),
@@ -225,6 +225,12 @@ void GraphicWindow::DrawCase(Espace& espace,size_t i, size_t j)
     else if (espace(i,j)==2){
         rect = {x,y,(int)_case_size,(int)_case_size};
         SDL_SetRenderDrawColor(renderer,70, 130, 180,255);
+        SDL_RenderFillRect(renderer,&rect);
+    }
+
+    if (i==i_0 && j==j_0){
+        rect = {x,y,(int)_case_size,(int)_case_size};
+        SDL_SetRenderDrawColor(renderer,255, 0, 0,255);
         SDL_RenderFillRect(renderer,&rect);
     }
 }

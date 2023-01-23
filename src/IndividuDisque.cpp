@@ -4,6 +4,7 @@
 #include<string>
 #include<cstdlib>
 #include"IndividuDisque.hpp"
+#include<cmath>
 
 //------------------------------------------------------------------------------------
 
@@ -56,20 +57,56 @@ void IndividuDisque::DrawDisque(SDL_Window *window,SDL_Renderer *renderer,double
 
 // ----------------------- FORCES -----------------------------------------------------
 
-void IndividuDisque::ForceInteraction()
+void IndividuDisque::ForcesPsycho(Individu* b)
 {
+    // Somme des rayons
+    double R = _rayon + b->get_rayon();
 
+    // Distance entre a et b
+    double  d_ab = norm2(pos,b->get_pos()) + softening;
+    
+    // vecteur direction
+    Vec2D u_ab = pos - b->get_pos();
+
+    // Ajout de la force
+    acc = acc + Ai*exp((R-d_ab)/Bi)*u_ab/d_ab;
 }
 
-void IndividuDisque::ForceCorps(size_t xmin,size_t ymin,double dx,size_t Nx,size_t Ny,int* first,int* pointers)
+void IndividuDisque::ForcesCorps(Individu* b)
 {
+    // Somme des rayons
+    double R = _rayon + b->get_rayon();
 
+    // Distance entre a et b
+    double  d_ab = norm2(pos,b->get_pos()) + softening;
+
+    if(d_ab < R){
+        // vecteur direction
+        Vec2D u_ab = pos - b->get_pos();
+
+        // Ajout de la force
+        acc = acc + k*(R-d_ab)*u_ab/d_ab;
+    }
 }
 
-void IndividuDisque::ForceFrictionGlissante()
-{
+void IndividuDisque::ForcesGlissante(Individu* b)
+{   
+    // Somme des rayons
+    double R = _rayon + b->get_rayon();
 
-}
+    // Distance entre a et b
+    double  d_ab = norm2(pos,b->get_pos()) + softening;
+    
+    if(d_ab < R){
+        // vecteur orthogona à AB
+        Vec2D t;
+        t.x = -(pos.y - b->get_pos().y)/d_ab;
+        t.y = (pos.x - b->get_pos().x)/d_ab;
+        
+        // Ajout de la force
+        acc = acc + K*(R - d_ab*dot(b->get_vit() - vit,t))*t;;
+    }
+}   
 
 //------------------------------------------------------------------------------------
 

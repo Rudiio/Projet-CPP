@@ -14,7 +14,8 @@
 ModeleFoule::ModeleFoule(size_t n,size_t espace_n,size_t espace_m):
     _n(nombre_pietons),
     _espace_n(espace_n),
-    _espace_m(espace_m)
+    _espace_m(espace_m),
+    _evacues(0)
 {
     InitFoule();
     InitGrille();
@@ -112,8 +113,7 @@ void ModeleFoule::CalculForce(FastMarching& FM)
     for (Individu* person : _foule){
         person->ResetAcc();
         person->ForceAcceleration(FM);
-        // person->ForceInteraction();
-        person->ForceCorps(_xmin,_ymin,_dx,_nx,_ny,_first,_pointers);
+        person->ForceInteractions(_foule,person);
         // person->ForceFrictionGlissante();
     }
         
@@ -123,4 +123,22 @@ void ModeleFoule::Euler(double h)
 {
     for (Individu* person: _foule)
         person->_Euler(h);
+}
+
+//--------------------------------------------------------------------------------------------
+
+void ModeleFoule::Evacutation()
+{
+    for(size_t i=0;i<_foule.size();i++){
+        size_t x = _foule[i]->get_pos().x/pas_espace +1;
+        size_t y = _foule[i]->get_pos().y/pas_espace +1;
+
+        // std::cout << "x= " <<  << "y= " << y << std::endl;
+
+        if(x==j_0 && y==i_0){
+            _n--;
+            _foule.erase(_foule.begin()+i);
+            _evacues++;
+        }
+    }   
 }

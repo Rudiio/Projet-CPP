@@ -22,9 +22,10 @@ class Individu
         // Calcul des forces 
         void _CalculForces(FastMarching& FM);
         void ForceAcceleration(FastMarching& FM);
-        virtual void ForceInteraction()=0;
-        virtual void ForceCorps(size_t xmin,size_t ymin,double dx,size_t Nx,size_t Ny,int* first,int* pointers)=0;
-        virtual void ForceFrictionGlissante()=0;
+        void ForceInteractions(std::vector<Individu*> foule,Individu* current);
+        virtual void ForcesPsycho(Individu* b)=0;
+        virtual void ForcesCorps(Individu* b)=0;
+        virtual void ForcesGlissante(Individu* b)=0;
         void ResetAcc();
 
         // Aire
@@ -35,7 +36,9 @@ class Individu
 
         virtual void toString()=0;
 
-        Vec2D get_pos(){return pos;}
+        Vec2D get_pos()const{return pos;}
+        Vec2D get_vit()const{return vit;}
+        virtual double get_rayon()const =0;
 
     protected:
         Vec2D acc;

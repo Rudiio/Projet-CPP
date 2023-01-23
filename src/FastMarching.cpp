@@ -1,19 +1,12 @@
 
 //------------------------- INCLUDES ---------------------------------------
 #include"FastMarching.hpp"
+#include"parametres.hpp"
 #include<cmath>
 
 //-------------------------------- FONCTIONS GENERALES ---------------------------------------
 
-double norm2(double x1,double y1,double x2,double y2)
-{
-    double x = x2-x1;
-    double y = y2-y2;
 
-    return sqrt(x*x + y*y);
-}
-
-double norm(Vec2D X){return sqrt(X.x*X.x + X.y*X.y);}
 
 //--------------------------------------------------------------------------
 
@@ -21,8 +14,8 @@ FastMarching::FastMarching(Espace* espace,double graduation):
 _espace(espace),
 __n(espace->get_n()),
 __m(espace->get_m()),
-i0(1),
-j0(__m-2),
+_i0(i_0),
+_j0(j_0),
 _p(graduation)
 {
     // Création de dist
@@ -42,14 +35,14 @@ FastMarching::~FastMarching()
 
 //---------------------------- FAST-MARCHING/ALGORITHME DE DIJKSTRA ----------------------------------------
 
-void FastMarching::InitFM(size_t i0,size_t j0,size_t t)
+void FastMarching::InitFM(size_t _i0,size_t _j0,size_t t)
 {
     // Initialisation des distances
     double inf = pow(10.0,t);
     for(size_t i=0;i<(__n)*(__m);i++){
         _dist[i]= inf;
     }
-    _dist[i0*__m + j0]=0;    // Point d'arrivée avec une distance nulle
+    _dist[_i0*__m + _j0]=0;    // Point d'arrivée avec une distance nulle
 
     // Initialisation de fini
     for(size_t i=0;i<__n;i++)
@@ -60,7 +53,7 @@ void FastMarching::InitFM(size_t i0,size_t j0,size_t t)
                 _fini[i*__m + j]=0;
         }
     
-    L.push_back(Vec2D(i0,j0));
+    L.push_back(Vec2D(_i0,_j0));
 }       
 
 std::vector<Vec2D> FastMarching::voisins(size_t i,size_t j)
@@ -99,7 +92,7 @@ void FastMarching::FM()
         t = __n;
     
     // Initialisation du Fast-Marching (dist,fini,L)
-    InitFM(i0,j0,t);
+    InitFM(_i0,_j0,t);
 
     while (L.size()!=0 ) 
     {

@@ -30,6 +30,8 @@ class ModeleFoule
         void VideGrille();
         void Grille();
         
+        void Evacutation();
+
         // getteur
         size_t get_n() const {return _n;}
         std::vector<Individu*> get_foule() const {return _foule;}
@@ -51,5 +53,8 @@ class ModeleFoule
 
         double _xmin;
         double _ymin; 
+
+        // Nombre d'évacués
+        size_t _evacues;
 
 };
