@@ -1,13 +1,11 @@
 #pragma once
 
 #include<iostream>
-#include<cmath>
-#include"Vec2D.hpp"
-#include"FastMarching.hpp"
 
 //********************************* PARAMETRES DE SIMULATION *******************************************
 
-// ------------------------------ PARAMETRES D'AFFICHAGE --------------------------------------
+// ------------------------------ PARAMETRES D'AFFICHAGE ---------------------------------------------------
+
 const size_t WIDTH = 1080;      // Largeur de la fenêtre 
 
 const size_t HEIGTH = 720;      // Hauteur de la fenêtre
@@ -23,11 +21,12 @@ const size_t Nx = ((HEIGTH-2*offset)/convert);      // Nombre de ligne de l'espa
 const size_t Ny = ((WIDTH-2*offset)/convert);       // Nombre de colonne de l'espace
 
 const size_t i_0=Nx/2;    // ordonnées du point d'évacuation
+
 const size_t j_0=Ny-2;    // abscisse du point d'évacuation 
 
 // ------------------------------ PARAMETRES DES PIETONS/FOULE --------------------------------------
 
-const size_t nombre_pietons = 100; //Nombre de piétons
+const size_t nombre_pietons = 1000; //Nombre de piétons
 
 const double rayon_pietons = 0.5; // Rayons des piétons
 
@@ -49,8 +48,14 @@ const double Ai = 2*0.1 ;//2*pow(10,3); // En newton
 
 const double Bi = 0.08; // en mètres
 
-const double k = 1.2*5000; // (en kg.s^-2)
+const double k = 1.2*10000; // (en kg.s^-2)
 
 const double K = 2.4*10; // (en km.m^-1.s^-1)
 
-const double softening = 0.001; // Permet de corriger les interactions entre piétons trop proches
+const double Ai_mur = 2*0.1;
+
+const double k_mur = 1.2*20000;
+
+const double K_mur = 2.4*10;
+
+const double softening = 0.01; // Permet de corriger les interactions entre piétons trop proches

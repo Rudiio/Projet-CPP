@@ -208,7 +208,7 @@ void GraphicWindow::DrawCase(Espace& espace,size_t i, size_t j)
     int y = (i-_axis_offset)*_case_size+_offset + _y_offset;
 
     // Attention à la correspondance avec les axes de la SDL
-    SDL_Rect rect = {x+1,y+1,(int)_case_size-1,(int)_case_size-1};
+    SDL_Rect rect = {x+1,y+1,(int)_case_size,(int)_case_size};
 
     //Affichage d'un mur
     if(espace(i,j)==1){

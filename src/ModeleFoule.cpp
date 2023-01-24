@@ -6,6 +6,7 @@
 #include<cstdlib>
 #include<random>
 #include<chrono>
+#include<omp.h>
 #include"ModeleFoule.hpp"
 #include"parametres.hpp"
 
@@ -18,7 +19,6 @@ ModeleFoule::ModeleFoule(size_t n,size_t espace_n,size_t espace_m):
     _evacues(0)
 {
     InitFoule();
-    InitGrille();
 }
 
 ModeleFoule::~ModeleFoule()
@@ -29,8 +29,6 @@ ModeleFoule::~ModeleFoule()
         delete _foule[i];
     }
 
-    delete[] _first;
-    delete[] _pointers;
 }
 
 void ModeleFoule::InitFoule()
@@ -49,78 +47,23 @@ void ModeleFoule::InitFoule()
     }
 }
 
-//------------------------------------ FORCE DE REPULSION ------------------------------------------
-
-void ModeleFoule::InitGrille()
-{
-    // Calcul de la taille de la grille
-    _dx = 2*rayon_pietons;
-    _nx = (_espace_m*pas_espace)/_dx;
-    _ny = (_espace_n*pas_espace)/_dx;
-
-    _xmin = -_dx*_nx/2;
-    _ymin = -_dx*_ny/2; 
-
-    // Création de la grille
-    _first = new int[_nx*_ny];
-    _pointers = new int[_n];
-
-    // Initialisation
-    VideGrille();
-}
-
-void ModeleFoule::VideGrille()
-{
-    for(size_t i=0;i<_nx*_ny;i++)
-        _first[i]=-1;
-    for(size_t i=0;i<_n;i++)
-        _pointers[i]=-1;
-}
-
-void ModeleFoule::Grille()
-{   
-    VideGrille();
-    for(size_t i=0;i<_foule.size();i++)
-    {
-        Individu& in = *_foule[i];
-
-        // Calcul des indexs d'espace
-        size_t k1 = (in.get_pos().x - _xmin)/_dx;
-        size_t k2 = (in.get_pos().y - _ymin)/_dx;
-        size_t l = k1 + _nx*k2;
-
-        // Ajout d'un premier disque dans le tableau
-        if(_first[l]==-1)
-            _first[l] = i;
-        
-        // Ajout de Linking
-        else{
-            size_t ni = _first[l];
-
-            while(_pointers[ni]!=-1){
-                ni = _pointers[ni];
-            }
-            ni = i;
-        }
-    }
-}
-
 //--------------------------------------------------------------------------------------------
 
-void ModeleFoule::CalculForce(FastMarching& FM)
+void ModeleFoule::CalculForce(FastMarching& FM,Espace* espace)
 {
-    // Grille();
+    # pragma omp parallel for schedule(static,1)
     for (Individu* person : _foule){
         person->ResetAcc();
         person->ForceAcceleration(FM);
         person->ForceInteractions(_foule,person);
-        // person->ForceFrictionGlissante();
+        person->ForcesMur(*espace);
     }
         
 }
 
 void ModeleFoule::Euler(double h)
 {
+    #pragma omp parallel for schedule(static,1)
     for (Individu* person: _foule)
         person->_Euler(h);
 }

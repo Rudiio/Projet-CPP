@@ -20,12 +20,15 @@ class Individu
         void _Euler(double h);
 
         // Calcul des forces 
-        void _CalculForces(FastMarching& FM);
         void ForceAcceleration(FastMarching& FM);
         void ForceInteractions(std::vector<Individu*> foule,Individu* current);
         virtual void ForcesPsycho(Individu* b)=0;
         virtual void ForcesCorps(Individu* b)=0;
         virtual void ForcesGlissante(Individu* b)=0;
+        void ForcesMur(Espace& espace);
+        virtual void ForceRepulsionMur(Vec2D projete)=0;
+        virtual void ForceGlissanteMur(Vec2D projete)=0;
+        virtual void ForcesPsychoMur(Vec2D projete)=0;
         void ResetAcc();
 
         // Aire

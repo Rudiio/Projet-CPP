@@ -144,7 +144,7 @@ void Simulation::Mainloop()
         // ---------------------------- PARTIE MODELISATION ----------------------------- //
         
         // Calcul des forces
-        _foule->CalculForce((*_FM));
+        _foule->CalculForce((*_FM),_espace);
 
         // Calcul de la position
         _foule->Euler(h);

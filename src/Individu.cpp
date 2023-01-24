@@ -1,11 +1,11 @@
 
-//------------------------- INCLUDES ---------------------------------------
+//------------------------- INCLUDES --------------------------------------------------
 #include<iostream>
 #include<string>
 #include"Individu.hpp"
 #include"parametres.hpp"
 
-//-------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------
 
 Individu::Individu(double x, double y):
     acc(Vec2D(0,0)),
@@ -21,17 +21,7 @@ Individu::~Individu()
 
 }
 
-
-void Individu::_CalculForces(FastMarching& FM)
-{   
-    // Calcul des forces à l'étape actuelle
-    // ResetAcc(); // On met l'accélération à 0 
-    // ForceAcceleration(FM);
-    // // ForceInteractions();
-    // // ForceCorps();
-    // ForceFrictionGlissante();
-
-}
+// ----------------------- FORCES -----------------------------------------------------
 
 void Individu::ForceInteractions(std::vector<Individu*> foule,Individu* current)
 {   
@@ -65,6 +55,48 @@ void Individu::ForceAcceleration(FastMarching& FM)
     acc.y += m/tau * (gradient.y - vit.y);
 
 }
+
+void Individu::ForcesMur(Espace& espace)
+{
+    // Déterminer si l'individu est pres de mur
+    size_t i = pos.y/pas_espace +1; // case dans le tableau d'espace
+    size_t j = pos.x/pas_espace +1; // case dans le tableau d'espace
+
+    // Mur au dessus
+    if(espace(i-1,j)==2 ||espace(i-1,j)==1){
+        Vec2D projete(pos.x,pas_espace*(i-1));
+        ForcesPsychoMur(projete);
+        ForceRepulsionMur(projete);
+        ForceGlissanteMur(projete);
+    }
+
+    // Mur en dessous
+    if(espace(i+1,j)==2 || espace(i+1,j)==1){
+        Vec2D projete(pos.x,pas_espace*i);
+        ForcesPsychoMur(projete);
+        ForceRepulsionMur(projete);
+        ForceGlissanteMur(projete);
+    }
+
+    // mur à gauche 
+    if(espace(i,j-1)==2 || espace(i,j-1)==1){
+        Vec2D projete(pas_espace*(j-1),pos.y);
+        ForcesPsychoMur(projete);
+        ForceRepulsionMur(projete);
+        ForceGlissanteMur(projete);
+    }
+
+    // Mur à droite
+    if(espace(i,j+1)==2 || espace(i,j+1)==1){
+        // On replace les index dans l'espace
+        Vec2D projete(pas_espace*j,pos.y);
+        ForcesPsychoMur(projete);
+        ForceRepulsionMur(projete);
+        ForceGlissanteMur(projete);
+    }
+}
+
+//--------------------------------------------------------------------------------------
 
 void Individu::ResetAcc()
 {

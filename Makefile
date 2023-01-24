@@ -1,6 +1,6 @@
 CC=g++
 CCFLAGS= -Wall -Werror -std=c++11 -g -O3
-LIBFLAGS= -lSDL2 -lSDL2_ttf
+LIBFLAGS= -lSDL2 -lSDL2_ttf -fopenmp
 SRC= $(wildcard src/*.cpp)
 OBJ= $(SRC:.cpp=.o)
 # TST_DIR=tests/

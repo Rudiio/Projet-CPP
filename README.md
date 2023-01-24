@@ -9,3 +9,8 @@ Pour télécharger la librairie SDL2 sous Ubuntu:
 ```sh
 sudo apt install libsdl2-dev libsdl2-ttf-dev
 ```
+
+Pour installer Openmp
+```
+sudo apt install libomp-dev
+```
