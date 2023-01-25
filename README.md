@@ -73,4 +73,4 @@ Voici, les configurations disponibles :
 **← → ↑ ↓** : Se déplacer dans l'espace
 
 ## Images
-![Alt text](/img/map_1.jpg "Optional title")
+![My Image](map_1.jpg)
