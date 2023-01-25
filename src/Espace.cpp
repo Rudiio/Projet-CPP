@@ -42,12 +42,30 @@ void Espace::MapGenerator()
         _map[(_m-1)+ i*_m]=1;
 
 
-        if(i!=_n/2 && i!=_n/2-1 && i!=_n/2+1){    // colonne du mileu
+        if(i!=_n/2 && i!=_n/2-1 && i!=_n/2+1){    // colonne du milieu
             _map[_m/2 + i*_m]=2;
-
         }
 
     }
+
+    // obstacle centrale
+
+    // _map[_m/2-3+(_n/2-1)*_m]=2;
+    // _map[_m/2-3+(_n/2+1)*_m]=2;
+    // _map[_m/2-3+(_n/2)*_m]=2;
+    // _map[_m/2-3+(_n/2-2)*_m]=2;
+    // _map[_m/2-3+(_n/2+2)*_m]=2;
+    // _map[_m/2-3+(_n/2-3)*_m]=2;
+    // _map[_m/2-3+(_n/2+3)*_m]=2;
+
+    //test
+    // _map[_m/2-1+(_n/2-1)*_m]=2;
+    // _map[_m/2-2+(_n/2-2)*_m]=2;
+    // //_map[_m/2+(_n/2)*_m]=2;
+    // _map[_m/2-3+(_n/2-3)*_m]=2;
+    // _map[_m/2+1+(_n/2+1)*_m]=2;
+    // _map[_m/2+2+(_n/2+2)*_m]=2;
+    // _map[_m/2+3+(_n/2+3)*_m]=2;
     
     // Première et dernière colonne
     for(size_t j=0;j<_m;j++){

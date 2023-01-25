@@ -26,13 +26,13 @@ const size_t j_0=Ny-2;    // abscisse du point d'évacuation
 
 // ------------------------------ PARAMETRES DES PIETONS/FOULE --------------------------------------
 
-const size_t nombre_pietons = 1000; //Nombre de piétons
+const size_t nombre_pietons = 10; //Nombre de piétons
 
 const double rayon_pietons = 0.5; // Rayons des piétons
 
 const double masse_pieton = 70;    // Masse des piétons
 
-const double vs = 10.34; // Vitesse des piétons (en m/s)
+const double vs = 30.34; // Vitesse des piétons (en m/s)//12.34
 
 // ------------------------------ PARAMETRES DE MODELISATION --------------------------------------
 
