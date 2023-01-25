@@ -73,4 +73,8 @@ Voici, les configurations disponibles :
 **← → ↑ ↓** : Se déplacer dans l'espace
 
 ## Images
-![My Image](img/map_1.jpg)
+<img width="526" alt="map_4" src="https://user-images.githubusercontent.com/92988071/214655323-7098a455-3571-4378-a48f-8b4daa4b0508.png">
+<img width="521" alt="map_3" src="https://user-images.githubusercontent.com/92988071/214655370-c395cb2b-3ee6-465f-a30a-090b2316e830.png">
+<img width="528" alt="map_5" src="https://user-images.githubusercontent.com/92988071/214655429-96c2c8fc-6709-4c83-ad44-1028f811c979.png">
+<img width="514" alt="map_6" src="https://user-images.githubusercontent.com/92988071/214655471-a1dd25e0-3fa8-4a7c-b26f-ddf86b20c746.png">
+
