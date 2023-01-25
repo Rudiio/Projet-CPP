@@ -24,7 +24,7 @@ const size_t i_0=Nx/2;    // ordonnées du point d'évacuation
 
 const size_t j_0=Ny-2;    // abscisse du point d'évacuation 
 
-const size_t map = 0;   // choix de la map
+const size_t map = 7;   // choix de la map
 
 // ------------------------------ PARAMETRES DES PIETONS/FOULE --------------------------------------
 
