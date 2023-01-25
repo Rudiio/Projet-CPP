@@ -24,19 +24,21 @@ const size_t i_0=Nx/2;    // ordonnées du point d'évacuation
 
 const size_t j_0=Ny-2;    // abscisse du point d'évacuation 
 
+const size_t map = 0;   // choix de la map
+
 // ------------------------------ PARAMETRES DES PIETONS/FOULE --------------------------------------
 
-const size_t nombre_pietons = 10; //Nombre de piétons
+const size_t nombre_pietons = 1000; //Nombre de piétons
 
 const double rayon_pietons = 0.5; // Rayons des piétons
 
 const double masse_pieton = 70;    // Masse des piétons
 
-const double vs = 30.34; // Vitesse des piétons (en m/s)//12.34
+const double vs = 100.34; // Vitesse des piétons (en m/s) 10.34
 
 // ------------------------------ PARAMETRES DE MODELISATION --------------------------------------
 
-const double pas_de_temps = 0.003; // Pas de  temps (en s)
+const double pas_de_temps = 0.001; // Pas de  temps (en s)
 
 const size_t pas_espace = 1; // Pas d'espace en m et l'unité d'espace en m
 
@@ -44,18 +46,19 @@ const double tau = 0.5; // temps de relaxation en s
 
 const double PI = 3.14159265358979323846;
 
-const double Ai = 2*0.1 ;//2*pow(10,3); // En newton
+const double Ai = 2*0.1 ;//2*pow(10,3); // Coefficient d'interaction sociale entre individu (en Newton)
 
 const double Bi = 0.08; // en mètres
 
-const double k = 1.2*10000; // (en kg.s^-2)
+const double k = 1.2*10000; // Coefficient de répulsion individu-individu (en kg.s^-2)
 
-const double K = 2.4*10; // (en km.m^-1.s^-1)
+const double K = 2.4*10; // Coefficient de répulsion glissante individu-individu (en km.m^-1.s^-1)
 
-const double Ai_mur = 2*0.1;
+const double Ai_mur = 2*1;    //  Coefficient d'interaction individu-mur (en Newton) 
 
-const double k_mur = 1.2*20000;
+const double k_mur = 1.2*30000;  // Coefficient de répulsion individu-mur (en kg.s^-2)
 
-const double K_mur = 2.4*10;
+const double K_mur = 2.4*10;    // Coefficient de répulsion glissante individu-mur (en km.m^-1.s^-1)
 
-const double softening = 0.01; // Permet de corriger les interactions entre piétons trop proches
+const double softening = 0.1; // Permet de corriger les interactions entre piétons trop proches
+

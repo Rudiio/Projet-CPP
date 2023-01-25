@@ -14,9 +14,13 @@ class Espace
 
         // Générateur de carte
         void MapGenerator();
-
-        // Fast-marching
-        void InitNoeud(size_t i0,size_t j0,double inf);
+        void MapGenerator1();
+        void MapGenerator2();
+        void MapGenerator3();
+        void MapGenerator4();
+        void MapGenerator5();
+        void MapGenerator6();
+        void MapGenerator7();
 
         // Surcharges d'opérateurs
         int operator()(size_t i,size_t j) const;
@@ -28,7 +32,6 @@ class Espace
 
     private:
         int* _map;  // Représentation de l'espace
-        double* _dist;   // Tableau des distances pour Dijkstra
         size_t _n;
         size_t _m;
 };
