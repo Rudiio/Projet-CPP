@@ -82,7 +82,7 @@ Voici, les configurations disponibles :
 
 - map=4 (map avec mur central et deux obstacles)
 
-- map=5 (map avec mur central et trois obstcles)
+- map=5 (map avec mur central et trois obstacles)
 
 - map=6 (map avec obstacle diagonal devant le point d'arrivé)
 
