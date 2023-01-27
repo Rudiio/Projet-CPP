@@ -72,21 +72,21 @@ Voici, les configurations disponibles :
 
 Voici, les configurations disponibles : 
 
--map=0 (map sans obstacles)
+- map=0 (map sans obstacles)
 
--map=1 (map avec mur central)
+- map=1 (map avec mur central)
 
--map=2 (map avec mur central et obstacle devant celui ci)
+- map=2 (map avec mur central et obstacle devant celui ci)
 
--map=3 (map avec colonnes)
+- map=3 (map avec colonnes)
 
--map=4 (map avec mur central et deux obstacles)
+- map=4 (map avec mur central et deux obstacles)
 
--map=5 (map avec mur central et trois obstcles)
+- map=5 (map avec mur central et trois obstcles)
 
--map=6 (map avec obstacle diagonal devant le point d'arrivé)
+- map=6 (map avec obstacle diagonal devant le point d'arrivé)
 
--map=7 (map avec obstcale en L)
+- map=7 (map avec obstcale en L)
 
 Il est également possible de modifier les coordonnées de la sortie en modifiant **i0** et **j0** dans **parametres.hpp**.
 
@@ -105,8 +105,8 @@ Il est également possible de modifier les coordonnées de la sortie en modifian
 **← → ↑ ↓** : Se déplacer dans l'espace
 
 ## Images
-<img width="526" alt="map_4" src="https://user-images.githubusercontent.com/92988071/214655323-7098a455-3571-4378-a48f-8b4daa4b0508.png">
-<img width="521" alt="map_3" src="https://user-images.githubusercontent.com/92988071/214655370-c395cb2b-3ee6-465f-a30a-090b2316e830.png">
-<img width="528" alt="map_5" src="https://user-images.githubusercontent.com/92988071/214655429-96c2c8fc-6709-4c83-ad44-1028f811c979.png">
-<img width="514" alt="map_6" src="https://user-images.githubusercontent.com/92988071/214655471-a1dd25e0-3fa8-4a7c-b26f-ddf86b20c746.png">
+<img width="526" alt="map_4" src="./img/map_4.png">
+<img width="521" alt="map_3" src="./img/map_3.png">
+<img width="528" alt="map_5" src="./img/map_5.png">
+<img width="514" alt="map_6" src="./img/map_6.png">
 

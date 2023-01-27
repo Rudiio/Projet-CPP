@@ -229,7 +229,7 @@ void GraphicWindow::DrawCase(Espace& espace,size_t i, size_t j)
         SDL_RenderFillRect(renderer,&rect);
     }
 
-    if (i==i_0 && j==j_0){
+    if ((i==i_0 && j==j_0) || (i==i_0-1 && j==j_0) ||(i==i_0+1 && j==j_0) ){
         rect = {x,y,(int)_case_size,(int)_case_size};
         SDL_SetRenderDrawColor(renderer,255, 0, 0,255);
         SDL_RenderFillRect(renderer,&rect);

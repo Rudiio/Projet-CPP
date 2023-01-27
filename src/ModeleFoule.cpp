@@ -98,7 +98,16 @@ void ModeleFoule::Evacutation()
         size_t x = _foule[i]->get_pos().x/pas_espace +1;
         size_t y = _foule[i]->get_pos().y/pas_espace +1;
 
-        if(x==j_0 && y==i_0){
+        // Suppression des individus hors de l'espace
+        if(_foule[i]->get_pos().x <0 || _foule[i]->get_pos().x > _espace_m*pas_espace ||
+            _foule[i]->get_pos().y<0 || _foule[i]->get_pos().y>_espace_n*pas_espace){
+            _n--;
+            delete _foule[i];
+            _foule.erase(_foule.begin()+i);
+            }
+        
+        // Evacuation des individus s'ils atteignent la sortie
+        if((x==j_0 && y==i_0) || (y==i_0-1 && x==j_0) ||(y==i_0+1 && x==j_0)){
             _n--;
             _Levacues.push_back(_foule[i]);
             _foule.erase(_foule.begin()+i);
