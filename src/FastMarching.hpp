@@ -22,9 +22,11 @@ class FastMarching
         
         Vec2D<double> Gradient(size_t i,size_t j);
 
-        size_t GetPosEspace(size_t i,size_t j);
         double operator()(size_t i, size_t j);
-
+        size_t GetPosEspace(size_t i,size_t j);
+        double *get_dist() const {return _dist;}
+        size_t *get_fini() const {return _fini;}
+        std::vector<Vec2D<size_t>> get_L() const {return L;}
     private:
         Espace* _espace;
         double* _dist;   // Tableau des distances pour Dijkstra

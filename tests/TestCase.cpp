@@ -4,6 +4,7 @@
 #include "catch.hpp"
 #include <iostream>
 #include <string>
+#include<iomanip>
 
 /************************* INCLUDES ****************************/
 
@@ -16,6 +17,7 @@
 #include"../src/PointMeca.hpp"
 #include"../src/Simulation.hpp"
 #include"../src/Vec2D.hpp"
+#include"../src/parametres.hpp"
 
 /***************************************************************/
 
@@ -31,11 +33,69 @@ TEST_CASE("1: Vec2D")
   a = 3*a;
   REQUIRE((a.x==45 && a.y==93));
   
-  // Tableau2D<float> tab2 = tab;
-  // REQUIRE(tab2 == tab);
-  // tab2(1,1) = 1.5;
-  // REQUIRE_FALSE(tab2 == tab);
-  // std::cout << " ---------- Tableau float ---------------" << std::endl;
-  // std::cout << tab2 << std::endl;
 }
 
+TEST_CASE("2: Individu Disque")
+{
+  IndividuDisque pieton(20,45,0.5,70);
+  std::stringstream xx;
+  xx << std::fixed << std::setprecision(1) << pieton.get_pos().x;
+  std::string x = xx.str();
+
+  REQUIRE(x == "20.0");
+  
+  std::stringstream yy;
+  yy << std::fixed << std::setprecision(1) << pieton.get_pos().y;
+  std::string y = yy.str();
+  REQUIRE(y == "45.0");
+
+  std::stringstream rr;
+  rr << std::fixed << std::setprecision(1) << pieton.get_rayon();
+  std::string r = rr.str();
+  REQUIRE(r == "0.5");
+}
+
+TEST_CASE("3: Espace ")
+{
+  Espace espace(Nx,Ny);
+  REQUIRE(espace.get_map()!=NULL);
+  
+  size_t val = espace(10,10);
+  size_t n = espace.get_n();
+  size_t m = espace.get_m();
+  REQUIRE(val==espace.get_map()[10*m + 10]);
+
+  espace(0,3) = 99;
+  REQUIRE(espace.get_map()[3]==99);
+
+}
+
+TEST_CASE("4: ModeleFoule")
+{
+  Espace espace(Nx,Ny);
+  size_t n = espace.get_n();
+  size_t m = espace.get_m();
+
+  ModeleFoule foule(100,n,m);
+  foule.InitFoule(espace);
+
+  REQUIRE(foule.get_foule().size()==100);
+  REQUIRE(foule.get_evacues()==0);
+
+}
+
+TEST_CASE("5: FastMarching")
+{
+  Espace espace(Nx,Ny);
+  size_t n = espace.get_n();
+  size_t m = espace.get_m();
+
+  FastMarching FM(&espace,pas_espace);
+  REQUIRE(FM.get_dist()!= NULL);
+  REQUIRE(FM.get_fini()!=NULL);
+
+  FM.InitFM(10,10,1);
+  REQUIRE(FM.get_L()[0]==Vec2D<size_t>(10,10));
+  REQUIRE(FM.GetPosEspace(10,10)==0);
+
+}

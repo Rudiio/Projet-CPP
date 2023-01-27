@@ -62,7 +62,7 @@ void ModeleFoule::InitFoule(Espace& espace)
         }
         
         // Ajout des Individus dans la foule
-        _foule.push_back(new IndividuDisque(x,y,rayon_pietons));
+        _foule.push_back(new IndividuDisque(x,y,rayon_pietons,masse_pieton));
     }
 }
 

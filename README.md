@@ -15,7 +15,7 @@ Nous avons choisi d'aborder le sujet de manière à pouvoir mêler les différen
 ## Présentation du sujet
 
 Le sujet de notre projet est la modélisation de l'évacuation de stades, notamment dans le contexte de la coupe du monde où de nombreuses personnes seront amenées à sortir des stades en même temps.
-Cela est donc similiare à une modélisation des mouvements de foules mais en considérant un mouvement général vers une sortie.
+Cela est donc similiare à une modélisation des mouvements de foules mais en considérant un mouvement général vers une sortie et avec des obstacles.
 
 ### Présentation du modèle
 
@@ -64,9 +64,9 @@ Pour lancer une simulation:
 ./foule
 ```
 
-Les paramètres de la simulation sont tous accessibles et modifiables dans le fichier **parametres.hpp**. Un changement de paramètres nécessite ainsi une recompilation.
+Les paramètres de la simulation sont tous accessibles et modifiables dans le fichier [**parametres.hpp**](./src/parametres.hpp) qui se situe dans le dossier src. Un changement de paramètres nécessite ainsi une recompilation.
 
-Il est possible de choisir parmi plus configuration de l'espace en changeant la variable **map** dans **parametres.hpp**.
+Il est possible de choisir parmi plus configuration de l'espace en changeant la variable **map** dans [**parametres.hpp**](./src/parametres.hpp). Il est également possible de modifier les coordonnées de la sortie en modifiant **i0** et **j0** dans [**parametres.hpp**](./src/parametres.hpp).
 
 Voici, les configurations disponibles : 
 
@@ -87,8 +87,6 @@ Voici, les configurations disponibles :
 - map=6 (map avec obstacle diagonal devant le point d'arrivé)
 
 - map=7 (map avec obstcale en L)
-
-Il est également possible de modifier les coordonnées de la sortie en modifiant **i0** et **j0** dans **parametres.hpp**.
 
 ## Touches
 

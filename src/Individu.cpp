@@ -7,11 +7,11 @@
 
 //--------------------------------------------------------------------------------------
 
-Individu::Individu(double x, double y):
+Individu::Individu(double x, double y,double masse):
     acc(Vec2D<double>(0,0)),
     vit(Vec2D<double>(0,0)),
     pos(Vec2D<double>(x,y)),
-    m(masse_pieton)
+    m(masse)
 {
     
 }

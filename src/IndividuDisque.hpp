@@ -13,7 +13,7 @@ class IndividuDisque : public Individu
 {   
     public:
         // Constructeurs-destructeurs
-        IndividuDisque(double x, double y,double rayon);
+        IndividuDisque(double x, double y,double rayon,double masse);
         ~IndividuDisque();
 
         // Calcul de l'aire 

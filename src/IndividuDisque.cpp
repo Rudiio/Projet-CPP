@@ -8,8 +8,8 @@
 
 //------------------------------------------------------------------------------------
 
-IndividuDisque::IndividuDisque(double x, double y,double rayon):
-    Individu(x,y),
+IndividuDisque::IndividuDisque(double x, double y,double rayon,double masse):
+    Individu(x,y,masse),
     _rayon(rayon_pietons)
 {
     aire = Aire();

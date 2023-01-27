@@ -29,6 +29,7 @@ class Espace
         // Getteurs
         size_t get_n() const {return _n;};
         size_t get_m() const {return _m;};
+        int* get_map() const {return _map;}
 
     private:
         int* _map;  // Représentation de l'espace

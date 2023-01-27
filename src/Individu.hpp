@@ -13,7 +13,7 @@
 class Individu
 {
     public:
-        Individu(double x,double y);
+        Individu(double x,double y,double masse);
         virtual ~Individu();
 
         // Intégration avec Euler
