@@ -42,11 +42,21 @@ Pour installer Openmp sous Ubuntu:
 sudo apt install libomp-dev
 ```
 
+Pour mettre à jour les packages, si l'installation des bibliothèques ne fait pas:
+```sh
+sudo apt-get upgrade
+```
+
 ## Utilisation
 
 Pour compiler le programme : 
 ```sh
 make
+```
+
+Pour lancer les test :
+```sh
+make test
 ```
 
 Pour lancer une simulation:
@@ -56,17 +66,39 @@ Pour lancer une simulation:
 
 Les paramètres de la simulation sont tous accessibles et modifiables dans le fichier **parametres.hpp**. Un changement de paramètres nécessite ainsi une recompilation.
 
-Il est possible de choisir parmi plus configuration de l'espace en changeant la variable **map**.
+Il est possible de choisir parmi plus configuration de l'espace en changeant la variable **map** dans **parametres.hpp**.
 
 Voici, les configurations disponibles : 
+
+Voici, les configurations disponibles : 
+
+-map=0 (map sans obstacles)
+
+-map=1 (map avec mur central)
+
+-map=2 (map avec mur central et obstacle devant celui ci)
+
+-map=3 (map avec colonnes)
+
+-map=4 (map avec mur central et deux obstacles)
+
+-map=5 (map avec mur central et trois obstcles)
+
+-map=6 (map avec obstacle diagonal devant le point d'arrivé)
+
+-map=7 (map avec obstcale en L)
+
+Il est également possible de modifier les coordonnées de la sortie en modifiant **i0** et **j0** dans **parametres.hpp**.
 
 ## Touches
 
 **A** : Afficher/Cacher les axes (Ralentit énormément le programme)
 
-**J** : Dézoom (ne fonctionne pas correctement)
+**I** : Afficher/Cacher les informations de simulation (Ralentit énormément le programme)
 
-**K** : Zoom (ne fonctionne pas correctement)
+**J** : Dézoom 
+
+**K** : Zoom 
 
 **echap** : Quitter la simulation
 

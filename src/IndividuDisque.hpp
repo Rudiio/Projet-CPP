@@ -29,9 +29,9 @@ class IndividuDisque : public Individu
         void ForcesPsycho(Individu* b);
         void ForcesCorps(Individu* b);
         void ForcesGlissante(Individu* b);
-        void ForceRepulsionMur(Vec2D projete);
-        void ForceGlissanteMur(Vec2D projete);
-        void ForcesPsychoMur(Vec2D projete);
+        void ForceRepulsionMur(Vec2D<double> projete);
+        void ForceGlissanteMur(Vec2D<double> projete);
+        void ForcesPsychoMur(Vec2D<double> projete);
 
         void toString();
 

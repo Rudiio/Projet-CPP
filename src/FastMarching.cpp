@@ -53,34 +53,32 @@ void FastMarching::InitFM(size_t _i0,size_t _j0,size_t t)
                 _fini[i*__m + j]=0;
         }
     
-    L.push_back(Vec2D(_i0,_j0));
+    L.push_back(Vec2D<size_t>(_i0,_j0));
 }       
 
-std::vector<Vec2D> FastMarching::voisins(size_t i,size_t j)
+std::vector<Vec2D<size_t>> FastMarching::voisins(size_t i,size_t j)
 {
-    std::vector<Vec2D> voisins;
+    std::vector<Vec2D<size_t>> voisins;
 
     if(i+1<__n)
-        voisins.push_back(Vec2D(i+1,j));
+        voisins.push_back(Vec2D<size_t>(i+1,j));
     if(i-1>=0)
-        voisins.push_back(Vec2D(i-1,j));
+        voisins.push_back(Vec2D<size_t>(i-1,j));
     if(j+1<__m)
-        voisins.push_back(Vec2D(i,j+1));
+        voisins.push_back(Vec2D<size_t>(i,j+1));
     if(j-1>=0)
-        voisins.push_back(Vec2D(i,j-1));
+        voisins.push_back(Vec2D<size_t>(i,j-1));
     
     return voisins;
 }
 
-bool FastMarching::in(std::vector<Vec2D> L,size_t i,size_t j)
+bool FastMarching::in(std::vector<Vec2D<size_t>> L,size_t i,size_t j)
 {
     for(size_t x=0; x<L.size();x++)
     {
         if(L[x].x==i && L[x].y==j)
             return true;
-        
     }
-
     return false;
 }
 
@@ -113,7 +111,7 @@ void FastMarching::FM()
         size_t min_j = L[r].y;
 
         // Calcul des voisins
-        std::vector<Vec2D> v = voisins(min_i,min_j);
+        std::vector<Vec2D<size_t>> v = voisins(min_i,min_j);
 
         // Calcul des distances des voisins
         for(size_t i=0;i<v.size();i++)
@@ -151,9 +149,9 @@ double FastMarching::operator()(size_t i,size_t j)
     return _dist[i*__m+ j];
 }
 
-Vec2D FastMarching::Gradient(size_t i,size_t j)
+Vec2D<double> FastMarching::Gradient(size_t i,size_t j)
 {
-    Vec2D gradient;
+    Vec2D<double> gradient;
 
     // Calcul du gradient
     gradient.x = _dist[i*__m+ (j+1)] - _dist[i*__m+ (j-1)];

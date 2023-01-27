@@ -152,10 +152,10 @@ void Espace::MapGenerator3()
 
     }
 
-    for(size_t i=0; i<_n;i++)
-        for(size_t j=0;j<_m;j++)
+    for(size_t i=1; i<_n;i++)
+        for(size_t j=1;j<_m-5;j++)
         {
-            if(j%5==0 && i%5==0){
+            if(j%5==0 && i%5==0 && i+1<_n){
                 _map[i*_m + j] =2;
                 _map[i*_m + j+1] =2;
                 _map[(i+1)*_m + j] =2;
@@ -171,6 +171,7 @@ void Espace::MapGenerator3()
     }
 
 }
+
 void Espace::MapGenerator4(){
     // Initialisation de la carte
     for(size_t i=0;i<_n*_m;i++){
@@ -194,7 +195,6 @@ void Espace::MapGenerator4(){
         }
     }
     
-
     // Première et dernière colonne
     for(size_t j=0;j<_m;j++){
         _map[j] = 1;

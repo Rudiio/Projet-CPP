@@ -16,11 +16,11 @@ class FastMarching
         ~FastMarching();
 
         void InitFM(size_t i0,size_t j0,size_t t);
-        std::vector<Vec2D> voisins(size_t i,size_t j);
-        bool in(std::vector<Vec2D> L,size_t i,size_t j);
+        std::vector<Vec2D<size_t>> voisins(size_t i,size_t j);
+        bool in(std::vector<Vec2D<size_t>> L,size_t i,size_t j);
         void FM();
         
-        Vec2D Gradient(size_t i,size_t j);
+        Vec2D<double> Gradient(size_t i,size_t j);
 
         size_t GetPosEspace(size_t i,size_t j);
         double operator()(size_t i, size_t j);
@@ -29,7 +29,7 @@ class FastMarching
         Espace* _espace;
         double* _dist;   // Tableau des distances pour Dijkstra
         size_t* _fini;
-        std::vector<Vec2D> L;
+        std::vector<Vec2D<size_t>> L;
 
         size_t __n;
         size_t __m;

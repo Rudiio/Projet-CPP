@@ -66,10 +66,10 @@ void IndividuDisque::ForcesPsycho(Individu* b)
     double  d_ab = norm2(pos,b->get_pos());
     
     // vecteur direction
-    Vec2D u_ab = pos - b->get_pos();
+    Vec2D<double> u_ab = pos - b->get_pos();
 
     // Ajout de la force
-    acc = acc + Ai*exp((R-d_ab)/Bi)*u_ab/(d_ab+softening);
+    acc = acc + Ai*exp((R-d_ab)/Bi)*(u_ab/(d_ab+softening+1));
 }
 
 void IndividuDisque::ForcesCorps(Individu* b)
@@ -78,14 +78,14 @@ void IndividuDisque::ForcesCorps(Individu* b)
     double R = _rayon + b->get_rayon();
 
     // Distance entre a et b
-    double  d_ab = norm2(pos,b->get_pos()) + softening;
+    double  d_ab = norm2(pos,b->get_pos());
 
     if(d_ab < R){
         // vecteur direction
-        Vec2D u_ab = pos - b->get_pos();
+        Vec2D<double> u_ab = pos - b->get_pos();
 
         // Ajout de la force
-        acc = acc + k*(R-d_ab)*u_ab/d_ab;
+        acc = acc + k*(R-d_ab)*u_ab/(d_ab+softening);
     }
 }
 
@@ -99,7 +99,7 @@ void IndividuDisque::ForcesGlissante(Individu* b)
     
     if(d_ab < R){
         // vecteur orthogona à AB
-        Vec2D t;
+        Vec2D<double> t;
         t.x = -(pos.y - b->get_pos().y)/(d_ab+softening);
         t.y = (pos.x - b->get_pos().x)/(d_ab+softening);
         
@@ -108,7 +108,7 @@ void IndividuDisque::ForcesGlissante(Individu* b)
     }
 }   
 
-void IndividuDisque::ForceRepulsionMur(Vec2D projete)
+void IndividuDisque::ForceRepulsionMur(Vec2D<double> projete)
 {
     // Distance entre a et b
     double  d_ab = norm2(pos,projete);
@@ -116,43 +116,42 @@ void IndividuDisque::ForceRepulsionMur(Vec2D projete)
     // std::cout << "distance " <<d_ab << std::endl;
     if(d_ab < _rayon){
         // vecteur direction
-        Vec2D u_ab = pos - projete;
+        Vec2D<double> u_ab = pos - projete;
 
         // Ajout de la force
-        // std::cout <<"force " << (k_mur*(_rayon-d_ab)*u_ab/(d_ab+softening)).x << "  " << (k_mur*(_rayon-d_ab)*u_ab/(d_ab+softening)).y << std::endl; 
         acc = acc + k_mur*(_rayon-d_ab)*u_ab/(d_ab+softening);
     }
 }
 
-void IndividuDisque::ForceGlissanteMur(Vec2D projete)
+void IndividuDisque::ForceGlissanteMur(Vec2D<double> projete)
 {
     // Distance entre a et b
     double  d_ab = norm2(pos,projete);
     
     if(d_ab < _rayon){
         // vecteur orthogonal à AB
-        Vec2D t;
+        Vec2D<double> t;
         t.x = -(pos.y - projete.y)/(d_ab+softening);
         t.y = (pos.x - projete.x)/(d_ab+softening);
         
         // Ajout de la force
-        // std::cout << "force glissante " << K_mur*(_rayon - d_ab*dot(-1*vit,t))*t.x << " " << K_mur*(_rayon - d_ab*dot(-1*vit,t))*t.y << std::endl;
         acc = acc + K_mur*(_rayon - d_ab*dot(-1*vit,t))*t;
     }
 }
 
-void IndividuDisque::ForcesPsychoMur(Vec2D projete)
+void IndividuDisque::ForcesPsychoMur(Vec2D<double> projete)
 {
 
     // Distance entre a et b
     double  d_ab = norm2(pos,projete);
     
     // vecteur direction
-    Vec2D u_ab = pos - projete;
+    Vec2D<double> u_ab = pos - projete;
 
     // Ajout de la force
     acc = acc + Ai_mur*exp((_rayon-d_ab)/Bi)*u_ab/(d_ab+softening);
 }
+
 //------------------------------------------------------------------------------------
 
 void IndividuDisque::toString()

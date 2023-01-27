@@ -8,7 +8,7 @@
 GraphicWindow::GraphicWindow(size_t width,size_t heigth,const std::string title):
     _offset(offset),
     _graduation(pas_espace), // pas d'espace
-    _convert(convert),
+    _convert(__convert),
     _x_offset(0),
     _y_offset(0),
     _x_origine(0),
@@ -20,7 +20,8 @@ GraphicWindow::GraphicWindow(size_t width,size_t heigth,const std::string title)
     _title(title),
     _case_size(_convert)
 {
-    //Initialisation de la SDL
+    //Initialisation de la 
+    std::cout << " ************************* DEBUT DE LA SIMULATION ********************************" << std::endl;
     if(SDL_Init(SDL_INIT_VIDEO)==-1)
 		throw std::runtime_error(SDL_GetError());
 
@@ -43,7 +44,7 @@ GraphicWindow::GraphicWindow(size_t width,size_t heigth,const std::string title)
     
     // Chargement de la police
     char path[]= "./font/dejavu/ttf/DejaVuSans.ttf";
-    _font = charge_font(path,400);
+    _font = charge_font(path,500);
 
     //Coloriage du fond
 	SDL_SetRenderDrawColor(renderer,255,255,255, 255); 

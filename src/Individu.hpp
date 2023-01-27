@@ -27,9 +27,9 @@ class Individu
         virtual void ForcesGlissante(Individu* b)=0;
         void ForcesMur(Espace& espace);
         void ForcesMurDiag(Espace& espace);
-        virtual void ForceRepulsionMur(Vec2D projete)=0;
-        virtual void ForceGlissanteMur(Vec2D projete)=0;
-        virtual void ForcesPsychoMur(Vec2D projete)=0;
+        virtual void ForceRepulsionMur(Vec2D<double> projete)=0;
+        virtual void ForceGlissanteMur(Vec2D<double> projete)=0;
+        virtual void ForcesPsychoMur(Vec2D<double> projete)=0;
         void ResetAcc();
 
         // Aire
@@ -40,14 +40,14 @@ class Individu
 
         virtual void toString()=0;
 
-        Vec2D get_pos()const{return pos;}
-        Vec2D get_vit()const{return vit;}
+        Vec2D<double> get_pos()const{return pos;}
+        Vec2D<double> get_vit()const{return vit;}
         virtual double get_rayon()const =0;
 
     protected:
-        Vec2D acc;
-        Vec2D vit;
-        Vec2D pos;
+        Vec2D<double> acc;
+        Vec2D<double> vit;
+        Vec2D<double> pos;
         double aire;
         double m; // masse d'un individu
         int rgb[3];

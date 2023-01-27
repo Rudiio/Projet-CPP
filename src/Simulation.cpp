@@ -22,6 +22,7 @@ Simulation::Simulation(int width,int heigth,std::string title):
 
     // Création de la foule
     _foule = new ModeleFoule(_nb,_n,_m);
+    _foule->InitFoule(*_espace);
 
     // Création du fast-Marching
     _FM = new FastMarching(_espace,_graduation);
@@ -49,6 +50,7 @@ Simulation::~Simulation()
 
 //------------------------- AAFFICHAGE ------------------------------------------
 
+// Affiche les informations de simulations
 void Simulation::DrawInfo()
 {   
     SDL_Color col  = {0,0,0};
@@ -74,7 +76,7 @@ void Simulation::DrawInfo()
             printf("%s\n",SDL_GetError());
 
         //affichage de la texture
-        SDL_Rect On_render = {_offset + get_case_size(),_offset + get_case_size() + 30*i,200,30};
+        SDL_Rect On_render = {_offset + get_case_size(),_offset + get_case_size() + 30*i,250,30};
         SDL_RenderCopy(renderer, texture,NULL, &On_render);
 
         //Libération de la mémoire
@@ -190,6 +192,7 @@ void Simulation::EventUP(SDL_Event& event)
             }
 }
 
+// Gestion des mouvements
 void Simulation::InputMovement()
 {
     if(_keys.up){
@@ -210,11 +213,12 @@ void Simulation::InputMovement()
     }
 }
 
+// Gestion des zooms/dezooms
 void Simulation::InputZooming()
 {
     if(_keys.zoom_state==-1)
     {
-        if(_convert-1>0)
+        if(_convert-2>0)
         {
             _convert-=1;
             add_case_size(-1);
@@ -222,7 +226,7 @@ void Simulation::InputZooming()
     }
     if(_keys.zoom_state==1)
     {
-        if(_convert<200){
+        if(_convert<20){
             _convert+=1;
             add_case_size(1);
         }
@@ -263,5 +267,6 @@ void Simulation::Mainloop()
 
         time += h;
     }
+    std::cout << " ************************* FIN DE LA SIMULATION ********************************" << std::endl;
 
 }

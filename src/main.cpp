@@ -4,11 +4,10 @@
 
 int main(int argc,char** argv)
 {
-    // srand(time(NULL));
     Simulation Simu(WIDTH,HEIGTH,"Modèlisation de mouvements de foule");
     
     Simu.Mainloop();
-
+    
     return 0;
 
 }

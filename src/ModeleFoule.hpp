@@ -4,6 +4,7 @@
 #include<iostream>
 #include<string>
 #include<vector>
+#include<list>
 #include <random>
 #include"IndividuDisque.hpp"
 
@@ -17,7 +18,7 @@ class ModeleFoule
         ~ModeleFoule();
 
         // Initialisation de la foule
-        void InitFoule();
+        void InitFoule(Espace& espace);
         
         // Calcul des forces 
         void CalculForce(FastMarching& FM,Espace* espace);
@@ -40,5 +41,6 @@ class ModeleFoule
 
         // Nombre d'évacués
         size_t _evacues;
+        std::list<Individu*> _Levacues;
 
 };
