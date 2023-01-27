@@ -24,7 +24,7 @@ const size_t i_0=Nx/2;    // ordonnées du point d'évacuation
 
 const size_t j_0=Ny-2;    // abscisse du point d'évacuation 
 
-const size_t map = 7;   // choix de la map
+const size_t map = 6;   // choix de la map
 
 // ------------------------------ PARAMETRES DES PIETONS/FOULE --------------------------------------
 
@@ -34,7 +34,7 @@ const double rayon_pietons = 0.5; // Rayons des piétons
 
 const double masse_pieton = 70;    // Masse des piétons
 
-const double vs = 100.34; // Vitesse des piétons (en m/s) 10.34
+const double vs = 30.34; // Vitesse des piétons (en m/s) 10.34
 
 // ------------------------------ PARAMETRES DE MODELISATION --------------------------------------
 

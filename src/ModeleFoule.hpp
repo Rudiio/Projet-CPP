@@ -29,6 +29,7 @@ class ModeleFoule
 
         // getteur
         size_t get_n() const {return _n;}
+        size_t get_evacues() const {return _evacues;}
         std::vector<Individu*> get_foule() const {return _foule;}
 
     private:

@@ -1,7 +1,7 @@
 //------------------------- INCLUDES ---------------------------------------
 #include"Simulation.hpp"
 #include"parametres.hpp"
-
+#include<omp.h>
 //------------------------- SIMULATION ------------------------------------------
 
 Simulation::Simulation(int width,int heigth,std::string title):
@@ -11,7 +11,8 @@ Simulation::Simulation(int width,int heigth,std::string title):
     time(0),      // Temps total
     _etat(true),
     _affiche_axes(false),
-    _nb(2) // Taille de la foule
+    _info(false),
+    _nb(nombre_pietons) // Taille de la foule
 {
 
     // Création de l'espace de la Simulation
@@ -25,6 +26,13 @@ Simulation::Simulation(int width,int heigth,std::string title):
     // Création du fast-Marching
     _FM = new FastMarching(_espace,_graduation);
     _FM->FM();
+
+    // Initialisation de la structure keys
+    _keys.up = 0;
+    _keys.down = 0;
+    _keys.left = 0;
+    _keys.rigth = 0;
+    _keys.zoom_state = 0;
 }
 
 Simulation::~Simulation()
@@ -40,6 +48,40 @@ Simulation::~Simulation()
 }
 
 //------------------------- AAFFICHAGE ------------------------------------------
+
+void Simulation::DrawInfo()
+{   
+    SDL_Color col  = {0,0,0};
+
+    // Création de la string contenant le texte
+    std::string text[4];
+    text[0] = "Nombre d'individus restants : N=" + std::to_string(_foule->get_n());
+    text[1] = "Nombre d'individus evacues : " + std::to_string(_foule->get_evacues());
+    text[2] = "Pas de temps : h=" + std::to_string(h)+"s";
+    text[3] = "Temps total : T=" + std::to_string(time) +"s";
+
+    for(int i=0;i<4;i++){
+        //Chargement du texte dans une surface
+        SDL_Surface *surface = TTF_RenderText_Solid(_font,text[i].c_str(),col);
+
+        if (surface==NULL)
+            printf("%s\n",SDL_GetError());
+
+        //Conversion de la surface en texture
+        SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, surface);
+
+        if (texture==NULL)
+            printf("%s\n",SDL_GetError());
+
+        //affichage de la texture
+        SDL_Rect On_render = {_offset + get_case_size(),_offset + get_case_size() + 30*i,200,30};
+        SDL_RenderCopy(renderer, texture,NULL, &On_render);
+
+        //Libération de la mémoire
+        SDL_DestroyTexture(texture);
+        SDL_FreeSurface(surface);
+    }
+}
 
 // Affiche les différents éléments
 void Simulation::Render()
@@ -60,6 +102,9 @@ void Simulation::Render()
     if (_affiche_axes)
         DrawAxis();
 
+    if(_info)
+        DrawInfo();
+
     // Affichage du rendu
     blit();
 
@@ -78,50 +123,108 @@ void Simulation::Input()
                 _etat=false;
 
             case SDL_KEYDOWN:
-                switch(event.key.keysym.sym){
-                    case SDLK_UP:
-                        _y_offset+=_convert;
-                        --_y_origine;
+                EventDOWN(event);
+                return;
+
+            case SDL_KEYUP:
+                EventUP(event);
+                return;
+        }
+    }
+}
+
+void Simulation::EventDOWN(SDL_Event &event)
+{
+    switch(event.key.keysym.sym){
+                    case SDLK_UP:_keys.up = 1; 
                         return ;
 
-                    case SDLK_DOWN:
-                        _y_offset-=_convert;
-                        ++_y_origine;
+                    case SDLK_DOWN:_keys.down = 1; 
                         return ;
 
-                    case SDLK_LEFT:
-                        _x_offset+=_convert;
-                        --_x_origine;
+                    case SDLK_LEFT:_keys.left = 1; 
                         return ;
 
                     case SDLK_RIGHT:
-                        _x_offset-=_convert;
-                        ++_x_origine;
+                        _keys.rigth = 1; 
                         return ;
 
-                    case SDLK_j:
-                        if(_convert-10>0){
-                            _convert-=10;
-                            add_case_size(-10);
-                        }
+                    case SDLK_j:_keys.zoom_state=-1;
                         return;
 
-                    case SDLK_k:
-                        if(_convert<100){
-                            _convert+=10;
-                            add_case_size(10);
-                        }
+                    case SDLK_k:_keys.zoom_state=1;
                         return;
 
                     case SDLK_a:
                         _affiche_axes = !_affiche_axes;
                         return;
-                        
-                    case SDLK_ESCAPE:
-                        _etat=false;
-                        return;
                     
-                } 
+                    case SDLK_i:_info = !_info;
+                        return;
+
+                    case SDLK_ESCAPE:_etat=false;
+                        return;
+            } 
+}
+
+void Simulation::EventUP(SDL_Event& event)
+{
+    switch(event.key.keysym.sym){
+                    case SDLK_UP:_keys.up = 0; 
+                        return ;
+
+                    case SDLK_DOWN:_keys.down = 0; 
+                        return ;
+
+                    case SDLK_LEFT:_keys.left = 0; 
+                        return ;
+
+                    case SDLK_RIGHT:_keys.rigth = 0; 
+                        return ;
+
+                    case SDLK_j:_keys.zoom_state=0;
+                        return;
+
+                    case SDLK_k:_keys.zoom_state=0;
+                        return;
+            }
+}
+
+void Simulation::InputMovement()
+{
+    if(_keys.up){
+        _y_offset+=_convert;
+        --_y_origine;
+    }
+    if(_keys.down){
+        _y_offset-=_convert;
+        ++_y_origine;
+    }
+    if(_keys.left){
+        _x_offset+=_convert;
+        --_x_origine;
+    }
+    if(_keys.rigth){
+        _x_offset-=_convert;
+        ++_x_origine;
+    }
+}
+
+void Simulation::InputZooming()
+{
+    if(_keys.zoom_state==-1)
+    {
+        if(_convert-1>0)
+        {
+            _convert-=1;
+            add_case_size(-1);
+        }
+    }
+    if(_keys.zoom_state==1)
+    {
+        if(_convert<200){
+            _convert+=1;
+            add_case_size(1);
         }
     }
 }
@@ -140,6 +243,8 @@ void Simulation::Mainloop()
 
         // Gestion des Inputs et evèments
         Input();
+        InputMovement();
+        InputZooming();
 
         // ---------------------------- PARTIE MODELISATION ----------------------------- //
         

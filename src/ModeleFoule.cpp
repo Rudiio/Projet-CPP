@@ -13,7 +13,7 @@
 //-------------------------------------------------------------------------
 
 ModeleFoule::ModeleFoule(size_t n,size_t espace_n,size_t espace_m):
-    _n(nombre_pietons),
+    _n(n),
     _espace_n(espace_n),
     _espace_m(espace_m),
     _evacues(0)

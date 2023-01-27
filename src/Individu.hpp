@@ -26,6 +26,7 @@ class Individu
         virtual void ForcesCorps(Individu* b)=0;
         virtual void ForcesGlissante(Individu* b)=0;
         void ForcesMur(Espace& espace);
+        void ForcesMurDiag(Espace& espace);
         virtual void ForceRepulsionMur(Vec2D projete)=0;
         virtual void ForceGlissanteMur(Vec2D projete)=0;
         virtual void ForcesPsychoMur(Vec2D projete)=0;

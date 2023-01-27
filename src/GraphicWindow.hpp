@@ -32,6 +32,7 @@ class GraphicWindow
         void DrawCase(Espace& espace,size_t i,size_t j);
         void DrawEspace(Espace& espace);
         void DrawFoule(ModeleFoule& foule);
+        virtual void DrawInfo()=0;
 
         // Inputs 
         virtual void Input() =0;
