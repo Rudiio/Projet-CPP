@@ -16,9 +16,6 @@ class IndividuDisque : public Individu
         IndividuDisque(double x, double y,double rayon,double masse);
         ~IndividuDisque();
 
-        // Calcul de l'aire 
-        double Aire();
-
         // Affichage de l'Individu
         void _DrawIndividu(SDL_Window *window,SDL_Renderer *renderer,int opt[]);
         void DrawDisque(SDL_Window *window,SDL_Renderer *renderer,double x,double y, double rayon);
@@ -33,8 +30,7 @@ class IndividuDisque : public Individu
         void ForceGlissanteMur(Vec2D<double> projete);
         void ForcesPsychoMur(Vec2D<double> projete);
 
-        void toString();
-
+        // Renvoie le rayon
         double get_rayon()const {return _rayon;}
         
     private:

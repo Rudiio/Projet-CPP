@@ -211,24 +211,25 @@ void GraphicWindow::DrawCase(Espace& espace,size_t i, size_t j)
     // Attention à la correspondance avec les axes de la SDL
     SDL_Rect rect = {x+1,y+1,(int)_case_size,(int)_case_size};
 
-    //Affichage d'un mur
+    //Affichage des bordures de l'espace
     if(espace(i,j)==1){
-        // SDL_SetRenderDrawColor(renderer,0,0,0,255);
         SDL_SetRenderDrawColor(renderer,105,105,105,255);
         SDL_RenderFillRect(renderer,&rect);
     }
+    // Affichage d'une case vide
     else if (espace(i,j)==0){
         rect = {x,y,(int)_case_size,(int)_case_size};
         SDL_SetRenderDrawColor(renderer,254, 254, 224,255);
-        // SDL_SetRenderDrawColor(renderer,255, 0, 0,255);
         SDL_RenderFillRect(renderer,&rect);
     }
+    // Affichage d'un mur/obstacle
     else if (espace(i,j)==2){
         rect = {x,y,(int)_case_size,(int)_case_size};
         SDL_SetRenderDrawColor(renderer,70, 130, 180,255);
         SDL_RenderFillRect(renderer,&rect);
     }
 
+    // Affichage de la sortie
     if ((i==i_0 && j==j_0) || (i==i_0-1 && j==j_0) ||(i==i_0+1 && j==j_0) ){
         rect = {x,y,(int)_case_size,(int)_case_size};
         SDL_SetRenderDrawColor(renderer,255, 0, 0,255);

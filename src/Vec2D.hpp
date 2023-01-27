@@ -7,6 +7,7 @@
 
 //-------------------------------------------------------------------------
 
+// Template pour les vecteurs à 2D dimensions
 template<typename T>
 class Vec2D
 {

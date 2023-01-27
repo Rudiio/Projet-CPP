@@ -12,7 +12,7 @@ Espace::Espace(size_t n,size_t m):
     // Allocation de la mémoire pour la map
     _map = new int[n*m];
 
-    // Création de la 
+    // Création de la map
     if(map==0)
         MapGenerator();
     else if(map==1)
@@ -38,8 +38,7 @@ Espace::~Espace()
 
 //---------------------------------------------------------------------------
 
-
-// Génére la carte de l'espace
+// Configuration de base
 void Espace::MapGenerator()
 {
     // Initialisation de la carte
@@ -56,7 +55,6 @@ void Espace::MapGenerator()
 
     }
     
-
     // Première et dernière colonne
     for(size_t j=0;j<_m;j++){
         _map[j] = 1;
@@ -66,15 +64,13 @@ void Espace::MapGenerator()
 
 }
 
-// Génére la carte de l'espace
+// Configuration 1 : map avec mur central
 void Espace::MapGenerator1()
 {
     // Initialisation de la carte
     for(size_t i=0;i<_n*_m;i++){
         _map[i]=0;
     }
-
-    // Génération de la carte
 
     // Première et dernière colonne
     for(size_t i=0;i<_n;i++){
@@ -98,7 +94,7 @@ void Espace::MapGenerator1()
 
 }
 
-// Génére la carte de l'espace
+// Configuration 2 : map avec mur central et obstacle devant celui ci
 void Espace::MapGenerator2()
 {
     // Initialisation de la carte
@@ -121,6 +117,7 @@ void Espace::MapGenerator2()
 
     }
     
+    // Création des obstacles
     _map[_m/2-2 + _n/2*_m]  = 2;
     _map[_m/2-3 + _n/2*_m]  = 2;
     _map[_m/2-2 + (_n/2-1)*_m]  = 2;
@@ -136,7 +133,7 @@ void Espace::MapGenerator2()
     }
 }
 
-// Génére la carte de l'espace
+// Configuration 3 : map avec colonnes
 void Espace::MapGenerator3()
 {
     // Initialisation de la carte
@@ -154,7 +151,8 @@ void Espace::MapGenerator3()
 
     for(size_t i=1; i<_n;i++)
         for(size_t j=1;j<_m-5;j++)
-        {
+        {   
+            // Création des Colonenes
             if(j%5==0 && i%5==0 && i+1<_n){
                 _map[i*_m + j] =2;
                 _map[i*_m + j+1] =2;
@@ -172,6 +170,7 @@ void Espace::MapGenerator3()
 
 }
 
+// Configuration 4 : map avec mur central et deux obstacles
 void Espace::MapGenerator4(){
     // Initialisation de la carte
     for(size_t i=0;i<_n*_m;i++){
@@ -184,7 +183,8 @@ void Espace::MapGenerator4(){
     for(size_t i=0;i<_n;i++){
         _map[i*_m] = 1;
         _map[(_m-1)+ i*_m]=1;
-
+        
+        // Création des obstacles
         if(i!=_n/3 && i!=_n/3-1 && i!=_n/3+1 && i!=2*_n/3 && i!= 2*_n/3-1 && i!=2*_n/3+1){   
             _map[_m/2 + i*_m]=2;
             _map[_m/2+1 + i*_m]=2;
@@ -203,6 +203,7 @@ void Espace::MapGenerator4(){
     }
 }
 
+// Configuration 5 : map avec mur central et trois obstacles
 void Espace::MapGenerator5()
 {
     // Initialisation de la carte
@@ -217,6 +218,7 @@ void Espace::MapGenerator5()
         _map[i*_m] = 1;
         _map[(_m-1)+ i*_m]=1;
 
+        // Création des obstacles
         if(i!=_n/3 && i!=_n/3-1 && i!=_n/3+1 && i!=2*_n/3 && i!= 2*_n/3-1 && i!=2*_n/3+1){   
             _map[_m/2 + i*_m]=2;
             _map[_m/2+1 + i*_m]=2;
@@ -229,8 +231,6 @@ void Espace::MapGenerator5()
             _map[3*_m/3-6+i*_m]=2;
             _map[3*_m/3-6+1+i*_m]=2;
         }
-
-
 
     }
     
@@ -254,6 +254,7 @@ void Espace::MapGenerator5()
 
 }
 
+// Configuration 6 : map avec obstacle diagonal devant le point d'arrivé
 void Espace::MapGenerator6(){
     for(size_t i=0;i<_n*_m;i++){
         _map[i]=0;
@@ -268,6 +269,7 @@ void Espace::MapGenerator6(){
 
     }
 
+    // Obstacles
     _map[_m-9+(_n/2-7)*_m]=2;
     _map[_m-10+(_n/2-6)*_m]=2;
     _map[_m-11+(_n/2-5)*_m]=2;
@@ -297,6 +299,7 @@ void Espace::MapGenerator6(){
 
 }
 
+// Configuration 7 : Letre L
 void Espace::MapGenerator7(){
     for(size_t i=0;i<_n*_m;i++){
         _map[i]=0;
@@ -356,7 +359,6 @@ void Espace::MapGenerator7(){
     // _map[_m/2+8+(_n/2)*_m]=2;
 
 }
-
 
 int Espace::operator()(size_t i,size_t j) const
 {

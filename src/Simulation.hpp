@@ -10,6 +10,7 @@
 
 //-------------------------------------------------------------------------
 
+// Structure gérant les Inputs/Mouvement
 struct keys
 {
     size_t up;

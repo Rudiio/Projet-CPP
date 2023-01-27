@@ -12,7 +12,7 @@ class Espace
         Espace(size_t n,size_t m);
         ~Espace();
 
-        // Générateur de carte
+        // Générateurs de carte
         void MapGenerator();
         void MapGenerator1();
         void MapGenerator2();

@@ -12,15 +12,17 @@ IndividuDisque::IndividuDisque(double x, double y,double rayon,double masse):
     Individu(x,y,masse),
     _rayon(rayon_pietons)
 {
-    aire = Aire();
-
-    // rgb[0]=178; // Rouge
-    // rgb[1]=34; // Vert
-    // rgb[2]=34; // Bleu
     rgb[0]=rand()%256; // Rouge
     rgb[1]=rand()%256; // Vert
     rgb[2]=rand()%256; // Bleu
 }
+
+IndividuDisque::~IndividuDisque()
+{
+
+}
+
+//---------------------------- AFFICHAGES --------------------------------------------------------
 
 void IndividuDisque::_DrawIndividu(SDL_Window *window,SDL_Renderer *renderer,int opt[])
 {
@@ -57,6 +59,7 @@ void IndividuDisque::DrawDisque(SDL_Window *window,SDL_Renderer *renderer,double
 
 // ----------------------- FORCES -----------------------------------------------------
 
+// Force sociale Individu-Individu
 void IndividuDisque::ForcesPsycho(Individu* b)
 {
     // Somme des rayons
@@ -72,6 +75,7 @@ void IndividuDisque::ForcesPsycho(Individu* b)
     acc = acc + Ai*exp((R-d_ab)/Bi)*(u_ab/(d_ab+softening+1));
 }
 
+// Force de répulsion Individu-Individu
 void IndividuDisque::ForcesCorps(Individu* b)
 {
     // Somme des rayons
@@ -89,6 +93,7 @@ void IndividuDisque::ForcesCorps(Individu* b)
     }
 }
 
+// Force de répulsion glissante Individu-Individu
 void IndividuDisque::ForcesGlissante(Individu* b)
 {   
     // Somme des rayons
@@ -108,6 +113,7 @@ void IndividuDisque::ForcesGlissante(Individu* b)
     }
 }   
 
+// Force de répulsion Individu-mur
 void IndividuDisque::ForceRepulsionMur(Vec2D<double> projete)
 {
     // Distance entre a et b
@@ -123,6 +129,7 @@ void IndividuDisque::ForceRepulsionMur(Vec2D<double> projete)
     }
 }
 
+// Force de répulsion glissante Individu-mur
 void IndividuDisque::ForceGlissanteMur(Vec2D<double> projete)
 {
     // Distance entre a et b
@@ -139,6 +146,7 @@ void IndividuDisque::ForceGlissanteMur(Vec2D<double> projete)
     }
 }
 
+// Force sociale Individu-mur
 void IndividuDisque::ForcesPsychoMur(Vec2D<double> projete)
 {
 
@@ -153,18 +161,3 @@ void IndividuDisque::ForcesPsychoMur(Vec2D<double> projete)
 }
 
 //------------------------------------------------------------------------------------
-
-void IndividuDisque::toString()
-{
-    std::cout << "Je suis un disque" << std::endl;
-}
-
-double IndividuDisque::Aire()
-{
-    return PI*_rayon*_rayon;
-}
-
-IndividuDisque::~IndividuDisque()
-{
-
-}

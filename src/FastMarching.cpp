@@ -9,7 +9,7 @@
 
 
 //--------------------------------------------------------------------------
-
+// Classe Implémentant l'algorithme de Fast-Marching pour la force d'Accélération
 FastMarching::FastMarching(Espace* espace,double graduation):
 _espace(espace),
 __n(espace->get_n()),
@@ -35,6 +35,7 @@ FastMarching::~FastMarching()
 
 //---------------------------- FAST-MARCHING/ALGORITHME DE DIJKSTRA ----------------------------------------
 
+// Initialise le Fast-MArching
 void FastMarching::InitFM(size_t _i0,size_t _j0,size_t t)
 {
     // Initialisation des distances
@@ -56,6 +57,7 @@ void FastMarching::InitFM(size_t _i0,size_t _j0,size_t t)
     L.push_back(Vec2D<size_t>(_i0,_j0));
 }       
 
+// Renvoie une liste contenant les cases voisines
 std::vector<Vec2D<size_t>> FastMarching::voisins(size_t i,size_t j)
 {
     std::vector<Vec2D<size_t>> voisins;
@@ -72,6 +74,7 @@ std::vector<Vec2D<size_t>> FastMarching::voisins(size_t i,size_t j)
     return voisins;
 }
 
+// Vérifie si un vecteur est présentd dans un vector
 bool FastMarching::in(std::vector<Vec2D<size_t>> L,size_t i,size_t j)
 {
     for(size_t x=0; x<L.size();x++)
@@ -82,6 +85,7 @@ bool FastMarching::in(std::vector<Vec2D<size_t>> L,size_t i,size_t j)
     return false;
 }
 
+// Algorithme de Fast-MArching
 void FastMarching::FM()
 {   
     // Valeur de t pour l'infini
@@ -119,27 +123,23 @@ void FastMarching::FM()
             size_t vi = v[i].x;
             size_t vj = v[i].y;
 
+            // Distance du voisin
             if(_fini[vi*__m + vj]!=1){
                 if(_dist[min_i*__m + min_j] + _p < _dist[vi*__m + vj])
                     _dist[vi*__m + vj] = _dist[min_i*__m + min_j] + _p;
 
+                // Ajout d'une case dans L
                 if (!in(L,vi,vj))
                     L.push_back(v[i]);
             }
             
         }
 
+        // On efface la case traitée
         L.erase(L.begin()+r);
         _fini[min_i*__m + min_j]=1;
     
     }
-
-    // for(size_t i=0;i<__n*__m;i++){
-    // if(i%__m==0)
-    //     std::cout << std::endl;
-    // std::cout << " " <<_dist[i]<< " ";
-    // }
-    // std::cout << std::endl;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -149,6 +149,7 @@ double FastMarching::operator()(size_t i,size_t j)
     return _dist[i*__m+ j];
 }
 
+// Calcule le gradient normalisé d'un point à partir de la grille des distances
 Vec2D<double> FastMarching::Gradient(size_t i,size_t j)
 {
     Vec2D<double> gradient;
@@ -163,14 +164,14 @@ Vec2D<double> FastMarching::Gradient(size_t i,size_t j)
     if(GetPosEspace(i,j+1)==2  )
         gradient.x=0;
 
+    // Norme du gradient
     double gnorm = norm(gradient);
 
+    // Normalisation
     if(gnorm>0){
         gradient.x /=gnorm;
         gradient.y /=gnorm;
     }
-
-    // std::cout << "i=" << i << " j=" << j << " x=" << gradient.x << ", y=" << gradient.y << std::endl;
 
     return gradient;
 }

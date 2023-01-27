@@ -8,10 +8,7 @@
 //--------------------------------------------------------------------------------------
 
 Individu::Individu(double x, double y,double masse):
-    acc(Vec2D<double>(0,0)),
-    vit(Vec2D<double>(0,0)),
-    pos(Vec2D<double>(x,y)),
-    m(masse)
+    PointMeca(Vec2D<double>(0,0),Vec2D<double>(0,0),Vec2D<double>(x,y),masse)
 {
     
 }
@@ -23,6 +20,7 @@ Individu::~Individu()
 
 // ----------------------- FORCES -----------------------------------------------------
 
+// Calcules les force d'interaction de l'individu par rapport à tous les autres
 void Individu::ForceInteractions(std::vector<Individu*> foule,Individu* current)
 {   
     // Itération sur la foule
@@ -30,6 +28,7 @@ void Individu::ForceInteractions(std::vector<Individu*> foule,Individu* current)
     {
         Individu* b = foule[j];
 
+        // Calcul des forces
         if(b!=current){
             ForcesPsycho(b);
             ForcesCorps(b);
@@ -38,6 +37,7 @@ void Individu::ForceInteractions(std::vector<Individu*> foule,Individu* current)
     }
 }
 
+// Calcule la force d'accélération
 void Individu::ForceAcceleration(FastMarching& FM)
 {
 
@@ -56,6 +56,7 @@ void Individu::ForceAcceleration(FastMarching& FM)
 
 }
 
+// Calcule la force appliquées par les murs autour
 void Individu::ForcesMur(Espace& espace)
 {
     // Déterminer si l'individu est pres de mur
@@ -95,6 +96,7 @@ void Individu::ForcesMur(Espace& espace)
     }
 }
 
+// Calcule la force appliquées par les murs des coins
 void Individu::ForcesMurDiag(Espace& espace)
 {
     // Déterminer si l'individu est pres de mur
@@ -136,6 +138,7 @@ void Individu::ForcesMurDiag(Espace& espace)
 
 //--------------------------------------------------------------------------------------
 
+// Réinitialisation de l'accélération
 void Individu::ResetAcc()
 {
     acc.x=0;

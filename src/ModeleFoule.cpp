@@ -42,16 +42,17 @@ void ModeleFoule::InitFoule(Espace& espace)
     std::uniform_real_distribution<double> posy(1,_espace_n-2);
     std::default_random_engine re(std::chrono::system_clock::now().time_since_epoch().count());
     
+    // Création de la population d'individus
     for(size_t i=0;i<_n;i++){
         
         // Génération de positions aléatoires
         double x = posx(re);
         double y = posy(re);
-        // double r = unif(re);
 
         size_t k = y/pas_espace+1;
         size_t j = x/pas_espace+1;
-
+        
+        // Pour éviter d'avoir des individus dans les murs
         while (espace(k,j)==1 || espace(k,j)==2)
         {
             x = posx(re);
@@ -94,6 +95,7 @@ void ModeleFoule::Euler(double h)
 
 void ModeleFoule::Evacutation()
 {
+    // Itération sur les individus pour déterminer les évacués
     for(size_t i=0;i<_foule.size();i++){
         size_t x = _foule[i]->get_pos().x/pas_espace +1;
         size_t y = _foule[i]->get_pos().y/pas_espace +1;

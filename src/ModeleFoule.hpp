@@ -26,6 +26,7 @@ class ModeleFoule
         // Intégration
         void Euler(double h);
         
+        // Gestion de l'évacuation
         void Evacutation();
 
         // getteur
@@ -35,12 +36,14 @@ class ModeleFoule
 
     private:
         size_t _n; // taille de la foule
-        std::vector<Individu*> _foule;
+        std::vector<Individu*> _foule;  // Foule d'individu
+
+        // Taille de l'espace (en nombre de cases)
         size_t _espace_n;
         size_t _espace_m;
 
         // Nombre d'évacués
         size_t _evacues;
-        std::list<Individu*> _Levacues;
+        std::list<Individu*> _Levacues; // Individus évacués
 
 };

@@ -103,7 +103,8 @@ void Simulation::Render()
     // Affichage des axes
     if (_affiche_axes)
         DrawAxis();
-
+    
+    // Affichage des informations
     if(_info)
         DrawInfo();
 
@@ -119,15 +120,18 @@ void Simulation::Input()
 {
     SDL_Event event;
 
+    // On prend un évènement dans la file d'évenement
     while(SDL_PollEvent(&event)){
         switch(event.type){
             case SDL_QUIT :
                 _etat=false;
 
+            // Touche pressée
             case SDL_KEYDOWN:
                 EventDOWN(event);
                 return;
-
+            
+            // Touche relachée
             case SDL_KEYUP:
                 EventUP(event);
                 return;
@@ -195,18 +199,24 @@ void Simulation::EventUP(SDL_Event& event)
 // Gestion des mouvements
 void Simulation::InputMovement()
 {
+    // déplacement vers le haut
     if(_keys.up){
         _y_offset+=_convert;
         --_y_origine;
     }
+
+    // déplacement vers le bas
     if(_keys.down){
         _y_offset-=_convert;
         ++_y_origine;
     }
+    // déplacement vers la gauche
     if(_keys.left){
         _x_offset+=_convert;
         --_x_origine;
     }
+
+    // déplacement vers la droite
     if(_keys.rigth){
         _x_offset-=_convert;
         ++_x_origine;
@@ -215,7 +225,8 @@ void Simulation::InputMovement()
 
 // Gestion des zooms/dezooms
 void Simulation::InputZooming()
-{
+{   
+    // Zoom
     if(_keys.zoom_state==-1)
     {
         if(_convert-2>0)
@@ -224,6 +235,8 @@ void Simulation::InputZooming()
             add_case_size(-1);
         }
     }
+
+    // Dézoom
     if(_keys.zoom_state==1)
     {
         if(_convert<20){
@@ -242,7 +255,7 @@ void Simulation::Mainloop()
     // Premier affichage
     Render();
 
-    // Boucle
+    // Boucle de la simulation
     while(_etat && _foule->get_foule().size()!=0){
 
         // Gestion des Inputs et evèments
